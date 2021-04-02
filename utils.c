@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 15:33:09 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/04/02 16:40:41 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/04/03 01:26:09 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void del_first_node(t_list **stack)
 	*stack = (*stack)->next;
 	free(aux);
 }
-void push_b(t_list **stack, t_list **stack_dest)
+void push(t_list **stack, t_list **stack_dest)
 {
 	if (*stack_dest)
 		ft_lstadd_front(stack_dest, ft_lstnew((*stack)->content));
@@ -89,25 +89,70 @@ void reverse_rotate (t_list **stack)
 	free(aux->next);
 	aux->next = NULL;
 }
+
+void reverse_rotate_rr(t_list **stack_a, t_list **stack_b)
+{
+	reverse_rotate(stack_a);
+	reverse_rotate(stack_b);	
+}
+
+void print_error()
+{
+	printf("Error\n");
+	exit(0);
+}
+
+void print_stacks(t_list *stack_a, t_list *stack_b)
+{
+	
+	while (stack_a || stack_b)
+	{
+		if (stack_a)
+		{
+			printf("%s", stack_a->content);
+			stack_a = stack_a->next;
+			
+		}
+		else
+			printf(" ");
+		if (stack_b)
+		{
+			printf(" %s", stack_b->content);
+			stack_b = stack_b->next;
+			
+		}
+		else
+			printf(" ");
+		
+		printf("\n");	
+	}
+	
+	printf("  \na b");
+	
+}
 int main (int argc, char * argv[])
 {
 	t_list	*stack_a;
 	t_list	*stack_b;
 	printf("[%d]\n", argc);
 	if (fill_stack(&stack_a, argv))
-		printf("no hay numeros");
+	{
+		print_error();
+		return(0);
+	}
 
 	//swap_stack(stack_a);
-	reverse_rotate(&stack_a);
+	//reverse_rotate(&stack_a);
 	//rotate(&stack_a);
 	//reverse_rotate(&stack_a);
 	//reverse_rotate(&stack_a);
 	//swap_stack(stack_a);
-	push_b(&stack_a, &stack_b);
-	push_b(&stack_a, &stack_b);
-	rotate_rr(&stack_a, &stack_b);
+	//push(&stack_a, &stack_b);
+	//push(&stack_a, &stack_b);
+	//reverse_rotate_rr(&stack_a, &stack_b);
+	//rotate_rr(&stack_a, &stack_b);
 	//push_b(&stack_a, &stack_b);
-	while (stack_a)
+	/*while (stack_a)
 	{
 		printf("%s\n", stack_a->content);
 		stack_a = stack_a->next;
@@ -117,5 +162,6 @@ int main (int argc, char * argv[])
 	{
 		printf("%s\n", stack_b->content);
 		stack_b = stack_b->next;
-	}
+	}*/
+	print_stacks(stack_a, stack_b);
 }
