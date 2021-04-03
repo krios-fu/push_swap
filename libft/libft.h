@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 14:58:27 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/04/01 15:25:14 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/04/03 13:57:00 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 typedef struct s_list
 {
-	void			*content;
+	int			content;
 	struct s_list	*next;
 }				t_list;
 
@@ -40,7 +40,7 @@ void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstlast(t_list *lst);
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 					void (*del)(void *));
-t_list			*ft_lstnew(void *content);
+t_list			*ft_lstnew(int content);
 int				ft_lstsize(t_list *lst);
 void			*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void			*ft_memchr(const void *s, int c, size_t n);

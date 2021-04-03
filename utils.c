@@ -6,16 +6,16 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 15:33:09 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/04/03 01:26:09 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/04/03 16:39:45 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./libft/libft.h"
 #include <stdio.h>
 
-void ft_swap (void **content_a, void **content_b)
+void ft_swap (int *content_a, int *content_b)
 {
-	void *content;
+	int	content;
 
 	content = *content_a;
 	*content_a = *content_b;
@@ -25,14 +25,14 @@ void ft_swap (void **content_a, void **content_b)
 int fill_stack (t_list	**stack_a, char **str)
 {
 	int	i;
+	int *num;
 
 	i = 1;
 	if (!str[i])
 		return (1);
-	*stack_a = ft_lstnew(&str[i][0]);	
+	*stack_a = ft_lstnew(ft_atoi(&str[i][0]));	
 	while (str[++i] != '\0')
-		ft_lstadd_back(stack_a, ft_lstnew(&str[i][0]));
-
+		ft_lstadd_back(stack_a, ft_lstnew(ft_atoi(&str[i][0])));
 	return (0);
 }
 
@@ -109,15 +109,15 @@ void print_stacks(t_list *stack_a, t_list *stack_b)
 	{
 		if (stack_a)
 		{
-			printf("%s", stack_a->content);
+			printf("%d\t", stack_a->content);
 			stack_a = stack_a->next;
 			
 		}
 		else
-			printf(" ");
+			printf(" \t");
 		if (stack_b)
 		{
-			printf(" %s", stack_b->content);
+			printf("%d", stack_b->content);
 			stack_b = stack_b->next;
 			
 		}
@@ -127,32 +127,125 @@ void print_stacks(t_list *stack_a, t_list *stack_b)
 		printf("\n");	
 	}
 	
-	printf("  \na b");
+	printf("\na\tb\n\n");
 	
 }
+
+int		check_a (t_list *stack)
+{
+	while (stack->next)
+	{
+		if (stack->content < stack->next->content)
+			stack = stack->next;
+		else
+			return (0);
+	}
+	return (1);
+}
+
+int		check_b (t_list *stack)
+{
+	while (stack->next)
+	{
+		if (stack->content > stack->next->content)
+			stack = stack->next;
+		else
+			return (0);
+	}
+	return (1);
+}
+
+int	push_swap(t_list **stack_a, t_list **stack_b)
+{
+	while (getchar())
+	{
+		if (check_a(*stack_a) && check_b(*stack_b))
+		{
+			while (*stack_b)
+			{
+				push(stack_b, stack_a);
+			}
+			print_stacks(*stack_a, *stack_b);
+			return(check_a(*stack_a));
+		}
+		print_stacks(*stack_a, *stack_b);
+		if ((*stack_a)->content > (*stack_a)->next->content)
+			{
+				swap_stack(*stack_a);
+				//return (check(*stack_a));
+			}
+		if ((*stack_a)->content > ft_lstlast((*stack_a))->content)
+			{
+				reverse_rotate(stack_a);
+				//return (check(*stack_a));
+			}
+		if (!check_a(*stack_a))
+		{
+			push(stack_a, stack_b);
+			if ((*stack_b)->next)
+				if ((*stack_b)->content < (*stack_b)->next->content)
+				{
+					swap_stack(*stack_b);
+					//return (check(*stack_a));
+				}
+			
+		}
+		if ((*stack_a)->content < (*stack_b)->content)
+		{
+			if (check_a(*stack_a) && check_b(*stack_b))
+			{
+				while (*stack_b)
+				{
+					push(stack_b, stack_a);
+				}
+				return(1);
+			}
+			push(stack_a, stack_b);
+			//swap_stack(*stack_b);
+		}
+
+		if (ft_lstsize(*stack_b) >= 3)
+		if ((*stack_b)->next->content < (*stack_b)->next->next->content)
+		{
+			rotate(stack_b);
+			swap_stack(*stack_b);
+			reverse_rotate(stack_b);
+		}
+
+
+			
+	}
+	return (check_a(*stack_a));
+}
+
 int main (int argc, char * argv[])
 {
 	t_list	*stack_a;
 	t_list	*stack_b;
-	printf("[%d]\n", argc);
 	if (fill_stack(&stack_a, argv))
 	{
 		print_error();
 		return(0);
 	}
 
-	//swap_stack(stack_a);
+	/*print_stacks(stack_a, stack_b);
+	printf("\n-----------\n");
+	swap_stack(stack_a);
+	print_stacks(stack_a, stack_b);
+	printf("\n-----------\n");
 	//reverse_rotate(&stack_a);
 	//rotate(&stack_a);
 	//reverse_rotate(&stack_a);
 	//reverse_rotate(&stack_a);
 	//swap_stack(stack_a);
-	//push(&stack_a, &stack_b);
-	//push(&stack_a, &stack_b);
+	push(&stack_a, &stack_b);
+	print_stacks(stack_a, stack_b);
+	printf("\n-----------\n");
+	push(&stack_a, &stack_b);
 	//reverse_rotate_rr(&stack_a, &stack_b);
-	//rotate_rr(&stack_a, &stack_b);
+	rotate_rr(&stack_a, &stack_b);
 	//push_b(&stack_a, &stack_b);
-	/*while (stack_a)
+	while (stack_a)
 	{
 		printf("%s\n", stack_a->content);
 		stack_a = stack_a->next;
@@ -163,5 +256,12 @@ int main (int argc, char * argv[])
 		printf("%s\n", stack_b->content);
 		stack_b = stack_b->next;
 	}*/
+	print_stacks(stack_a, stack_b);
+	if (push_swap(&stack_a, &stack_b))
+		printf("\nOrdenado\n");
+	else
+		printf("\nNo esta ordenado\n");
+	
+	print_stacks(stack_a, stack_b);
 	print_stacks(stack_a, stack_b);
 }
