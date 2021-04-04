@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 15:33:09 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/04/04 20:33:03 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/04/04 23:57:12 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,13 +156,31 @@ int		check_b (t_list *stack)
 	return (1);
 }
 
+int average(t_list *stack)
+{
+	int flag;
+
+	flag = 0;
+	
+	while (stack)
+	{
+		if (stack->content > flag)
+		{
+			flag = stack->content;
+		}
+		stack = stack->next;
+	}
+	return(flag/2);
+	
+}
+
 int	push_swap(t_list **stack_a, t_list **stack_b)
 {
 	int flag;
 	int i;
 
 	i = 0;
-	flag = 0;
+	flag = average(*stack_a);
 	while (getchar())
 	{
 		flag = 0;
@@ -175,63 +193,9 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 					i++;
 			}
 				printf("----> total de movimientos [%d]", i);
-			return(check_a(*stack_a));
+			return(check_a(*stack_a));			
 		}
-		//print_stacks(*stack_a, *stack_b);
-		if ((*stack_a)->content > (*stack_a)->next->content)
-			{
-				swap_stack(*stack_a);
-				printf("sa\n");
-				i++;
-			}
-		else if ((*stack_a)->content > ft_lstlast((*stack_a))->content)
-			{
-				reverse_rotate(stack_a);
-				printf("rr\n");
-				i++;
-			}
-
-		if (ft_lstsize(*stack_b) >= 2)
-		{
-
-			if ((*stack_b)->content < ft_lstlast((*stack_b))->content)
-			{
-				rotate(stack_b);
-				printf("rb\n");
-				i++;
-			}
-			if ((*stack_b)->content < (*stack_b)->next->content)
-			{
-				swap_stack(*stack_b);
-				printf("sb\n");
-				i++;
-			}
-			if ((*stack_a)->content < (*stack_b)->content && ((*stack_a)->content > ft_lstlast(*stack_b)->content))
-			{
-					flag = 1;
-					while (ft_lstlast(*stack_b)->content < (*stack_a)->content)
-					{
-						reverse_rotate(stack_b);
-						printf("rr\n");
-						i++;
-					}					
-					push(stack_a, stack_b);
-					while ((*stack_b)->content < ft_lstlast(*stack_b)->content)
-					{
-						rotate(stack_b);
-						printf("rb\n");
-						i++;
-					}
-			}
-
-		}
-		if (!check_a(*stack_a) && flag == 0 )
-			{
-				push(stack_a, stack_b);
-				printf("pb\n");		
-				i++;
-			}
-			
+		if ((*stack_a)->content < )
 	}
 
 	return (check_a(*stack_a));
@@ -240,17 +204,19 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 int main (int argc, char * argv[])
 {
 	t_list	*stack_a;
-	t_list	*stack_b;
+	//t_list	*stack_b;
 	if (fill_stack(&stack_a, argv))
 	{
 		print_error();
 		return(0);
 	}
-
+/*
 	if (push_swap(&stack_a, &stack_b))
 		printf("\nOrdenado\n");
 	else
 		printf("\nNo esta ordenado\n");
 	
-	print_stacks(stack_a, stack_b);
+	print_stacks(stack_a, stack_b);*/
+
+	printf("%d", average(stack_a));
 }
