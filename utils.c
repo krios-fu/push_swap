@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 15:33:09 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/04/03 16:39:45 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/04/04 20:33:03 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void push(t_list **stack, t_list **stack_dest)
 		*stack_dest = ft_lstnew((*stack)->content);
 	
 	del_first_node(stack);
+
 }
 
 void rotate (t_list **stack)
@@ -157,64 +158,82 @@ int		check_b (t_list *stack)
 
 int	push_swap(t_list **stack_a, t_list **stack_b)
 {
+	int flag;
+	int i;
+
+	i = 0;
+	flag = 0;
 	while (getchar())
 	{
-		if (check_a(*stack_a) && check_b(*stack_b))
+		flag = 0;
+		if ((check_a(*stack_a) && check_b(*stack_b)))// && (*stack_a)->content > (*stack_b)->content)
 		{
 			while (*stack_b)
 			{
 				push(stack_b, stack_a);
+					printf("pa\n");
+					i++;
 			}
-			print_stacks(*stack_a, *stack_b);
+				printf("----> total de movimientos [%d]", i);
 			return(check_a(*stack_a));
 		}
-		print_stacks(*stack_a, *stack_b);
+		//print_stacks(*stack_a, *stack_b);
 		if ((*stack_a)->content > (*stack_a)->next->content)
 			{
 				swap_stack(*stack_a);
-				//return (check(*stack_a));
+				printf("sa\n");
+				i++;
 			}
-		if ((*stack_a)->content > ft_lstlast((*stack_a))->content)
+		else if ((*stack_a)->content > ft_lstlast((*stack_a))->content)
 			{
 				reverse_rotate(stack_a);
-				//return (check(*stack_a));
+				printf("rr\n");
+				i++;
 			}
-		if (!check_a(*stack_a))
+
+		if (ft_lstsize(*stack_b) >= 2)
 		{
-			push(stack_a, stack_b);
-			if ((*stack_b)->next)
-				if ((*stack_b)->content < (*stack_b)->next->content)
-				{
-					swap_stack(*stack_b);
-					//return (check(*stack_a));
-				}
-			
-		}
-		if ((*stack_a)->content < (*stack_b)->content)
-		{
-			if (check_a(*stack_a) && check_b(*stack_b))
+
+			if ((*stack_b)->content < ft_lstlast((*stack_b))->content)
 			{
-				while (*stack_b)
-				{
-					push(stack_b, stack_a);
-				}
-				return(1);
+				rotate(stack_b);
+				printf("rb\n");
+				i++;
 			}
-			push(stack_a, stack_b);
-			//swap_stack(*stack_b);
+			if ((*stack_b)->content < (*stack_b)->next->content)
+			{
+				swap_stack(*stack_b);
+				printf("sb\n");
+				i++;
+			}
+			if ((*stack_a)->content < (*stack_b)->content && ((*stack_a)->content > ft_lstlast(*stack_b)->content))
+			{
+					flag = 1;
+					while (ft_lstlast(*stack_b)->content < (*stack_a)->content)
+					{
+						reverse_rotate(stack_b);
+						printf("rr\n");
+						i++;
+					}					
+					push(stack_a, stack_b);
+					while ((*stack_b)->content < ft_lstlast(*stack_b)->content)
+					{
+						rotate(stack_b);
+						printf("rb\n");
+						i++;
+					}
+			}
+
 		}
-
-		if (ft_lstsize(*stack_b) >= 3)
-		if ((*stack_b)->next->content < (*stack_b)->next->next->content)
-		{
-			rotate(stack_b);
-			swap_stack(*stack_b);
-			reverse_rotate(stack_b);
-		}
-
-
+		if (!check_a(*stack_a) && flag == 0 )
+			{
+				push(stack_a, stack_b);
+				printf("pb\n");		
+				i++;
+			}
 			
 	}
+
 	return (check_a(*stack_a));
 }
 
@@ -228,40 +247,10 @@ int main (int argc, char * argv[])
 		return(0);
 	}
 
-	/*print_stacks(stack_a, stack_b);
-	printf("\n-----------\n");
-	swap_stack(stack_a);
-	print_stacks(stack_a, stack_b);
-	printf("\n-----------\n");
-	//reverse_rotate(&stack_a);
-	//rotate(&stack_a);
-	//reverse_rotate(&stack_a);
-	//reverse_rotate(&stack_a);
-	//swap_stack(stack_a);
-	push(&stack_a, &stack_b);
-	print_stacks(stack_a, stack_b);
-	printf("\n-----------\n");
-	push(&stack_a, &stack_b);
-	//reverse_rotate_rr(&stack_a, &stack_b);
-	rotate_rr(&stack_a, &stack_b);
-	//push_b(&stack_a, &stack_b);
-	while (stack_a)
-	{
-		printf("%s\n", stack_a->content);
-		stack_a = stack_a->next;
-	}
-	printf("\nStack_b\n");
-	while (stack_b)
-	{
-		printf("%s\n", stack_b->content);
-		stack_b = stack_b->next;
-	}*/
-	print_stacks(stack_a, stack_b);
 	if (push_swap(&stack_a, &stack_b))
 		printf("\nOrdenado\n");
 	else
 		printf("\nNo esta ordenado\n");
 	
-	print_stacks(stack_a, stack_b);
 	print_stacks(stack_a, stack_b);
 }
