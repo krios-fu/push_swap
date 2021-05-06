@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 15:33:09 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/04/11 19:24:48 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/06 16:23:02 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,30 +217,31 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 	int i;
 
 	i = 0;
-	flag = average(*stack_a);
+	flag = 6;
 	while (i <= 1000)
 	{
-		if(check_a(*stack_a) && (*stack_b))
-			i = 1000;
-		if((*stack_a)->content < ft_lstlast(*stack_a)->content)
-			reverse_rotate(stack_a, 'a');
-		if(check_a(*stack_a) && (*stack_b))
-			i = 1000;
+		if(check_a(*stack_a) && !(*stack_b))
+			return (check_a(*stack_a));
+
 		if((*stack_a)->content > (*stack_a)->next->content)
 			swap_stack(*stack_a, 'a');
-		if(check_a(*stack_a) && (*stack_b))
-			i = 1000;
-		if((*stack_a)->content > ft_lstlast(*stack_a)->content)
-			rotate(stack_a, 'a');
-		if(check_a(*stack_a) && (*stack_b))
-			i = 1000;
-		if((*stack_a)->content < flag)
+		while((*stack_a)->content <= flag)
 			push(stack_a, stack_b, 'a');
-		if (check_a(*stack_a) && check_b(*stack_b) || ft_lstsize(*stack_b) == 1)
-			push(stack_b, stack_a, 'b');
-
+		if(ft_lstlast(*stack_a)->content < flag)
+			reverse_rotate(stack_a, 'a');
 		if(check_a(*stack_a) && !(*stack_b))
-			i = 1000;		
+			return (check_a(*stack_a));
+		if(check_a(*stack_a) && !(*stack_b))
+			return (check_a(*stack_a));
+		while((*stack_b) && check_a(*stack_a))
+			push(stack_b, stack_a, 'b');
+		if(check_a(*stack_a) && !(*stack_b))
+			return (check_a(*stack_a));
+		if((*stack_a)->next->content > flag)
+		{
+			swap_stack(*stack_a, 'a');
+			rotate(stack_a, 'a');
+		}
 		i++;
 
 	}
