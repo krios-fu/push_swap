@@ -6,46 +6,19 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 15:33:09 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/04/04 23:57:12 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/04/11 19:24:48 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./libft/libft.h"
 #include <stdio.h>
 
-void ft_swap (int *content_a, int *content_b)
+void print_error()
 {
-	int	content;
-
-	content = *content_a;
-	*content_a = *content_b;
-	*content_b = content;
+	printf("Error\n");
+	exit(0);
 }
 
-int fill_stack (t_list	**stack_a, char **str)
-{
-	int	i;
-	int *num;
-
-	i = 1;
-	if (!str[i])
-		return (1);
-	*stack_a = ft_lstnew(ft_atoi(&str[i][0]));	
-	while (str[++i] != '\0')
-		ft_lstadd_back(stack_a, ft_lstnew(ft_atoi(&str[i][0])));
-	return (0);
-}
-
-void swap_stack (t_list *stack)
-{
-	ft_swap(&stack->content, &stack->next->content);
-}
-
-void swap_ss (t_list *stack_a, t_list *stack_b)
-{
-	ft_swap(&stack_a->content, &stack_a->next->content);
-	ft_swap(&stack_b->content, &stack_b->next->content);
-}
 void del_first_node(t_list **stack)
 {
 	t_list *aux;
@@ -53,7 +26,70 @@ void del_first_node(t_list **stack)
 	*stack = (*stack)->next;
 	free(aux);
 }
-void push(t_list **stack, t_list **stack_dest)
+
+void ft_swap (int *content_a, int *content_b, char c)
+{
+	int	content;
+
+	content = *content_a;
+	*content_a = *content_b;
+	*content_b = content;
+
+	if(c == 'a')
+		printf("sa\n");
+	else
+		printf("sb\n");
+}
+
+int dup_number(t_list *stack, int number)
+{
+	while (stack)
+	{
+		if(stack->content == number)
+			return(1);
+		stack = stack->next;
+	}
+		return(0);
+
+}
+int fill_stack (t_list	**stack_a, char **str)
+{
+	int	i;
+	int content;
+	int *num;
+
+	i = 1;
+	if (!str[i])
+		return (1);
+	content = ft_atoi(&str[i][0]);
+	*stack_a = ft_lstnew(content);	
+	while (str[++i] != '\0')
+	{
+		content =ft_atoi(&str[i][0]);
+		if(dup_number(*stack_a, content))
+		{
+			while (*stack_a)
+				del_first_node(stack_a);
+			print_error();
+		}
+		else
+			ft_lstadd_back(stack_a, ft_lstnew(content));
+	}
+	return (0);
+}
+
+void swap_stack (t_list *stack, char c)
+{
+	ft_swap(&stack->content, &stack->next->content, c);
+}
+
+void swap_ss (t_list *stack_a, t_list *stack_b)
+{
+	ft_swap(&stack_a->content, &stack_a->next->content, 'a');
+	ft_swap(&stack_b->content, &stack_b->next->content, 'b');
+}
+
+void push(t_list **stack, t_list **stack_dest, char c)
 {
 	if (*stack_dest)
 		ft_lstadd_front(stack_dest, ft_lstnew((*stack)->content));
@@ -61,24 +97,32 @@ void push(t_list **stack, t_list **stack_dest)
 		*stack_dest = ft_lstnew((*stack)->content);
 	
 	del_first_node(stack);
+		if(c == 'a')
+		printf("pb\n");
+	else
+		printf("pa\n");
 
 }
 
-void rotate (t_list **stack)
+void rotate (t_list **stack, char c)
 {
 	t_list *aux;
 	aux = *stack;
 	ft_lstadd_back(stack, ft_lstnew((*stack)->content));
-	del_first_node(stack);	
+	del_first_node(stack);
+	if(c == 'a')
+		printf("ra\n");
+	else
+		printf("rb\n");
 }
 
 void rotate_rr (t_list **stack_a, t_list **stack_b)
 {
-	rotate(stack_a);
-	rotate(stack_b);	
+	rotate(stack_a, 'a');
+	rotate(stack_b, 'b');	
 }
 
-void reverse_rotate (t_list **stack)
+void reverse_rotate (t_list **stack, char c)
 {
 	t_list *aux;
 	void *cont;
@@ -89,18 +133,16 @@ void reverse_rotate (t_list **stack)
 	ft_lstadd_front(stack, ft_lstnew(aux->next->content));
 	free(aux->next);
 	aux->next = NULL;
+	if(c == 'a')
+		printf("rra\n");
+	else
+		printf("rrb\n");
 }
 
 void reverse_rotate_rr(t_list **stack_a, t_list **stack_b)
 {
-	reverse_rotate(stack_a);
-	reverse_rotate(stack_b);	
-}
-
-void print_error()
-{
-	printf("Error\n");
-	exit(0);
+	reverse_rotate(stack_a, 'a');
+	reverse_rotate(stack_b, 'b');	
 }
 
 void print_stacks(t_list *stack_a, t_list *stack_b)
@@ -156,22 +198,17 @@ int		check_b (t_list *stack)
 	return (1);
 }
 
-int average(t_list *stack)
+int average (t_list *stack)
 {
-	int flag;
-
-	flag = 0;
-	
+	long i;
+	i = 0;
 	while (stack)
 	{
-		if (stack->content > flag)
-		{
-			flag = stack->content;
-		}
+		i += stack->content;
 		stack = stack->next;
-	}
-	return(flag/2);
+	}	
 	
+	return(i / 2);
 }
 
 int	push_swap(t_list **stack_a, t_list **stack_b)
@@ -181,21 +218,31 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 
 	i = 0;
 	flag = average(*stack_a);
-	while (getchar())
+	while (i <= 1000)
 	{
-		flag = 0;
-		if ((check_a(*stack_a) && check_b(*stack_b)))// && (*stack_a)->content > (*stack_b)->content)
-		{
-			while (*stack_b)
-			{
-				push(stack_b, stack_a);
-					printf("pa\n");
-					i++;
-			}
-				printf("----> total de movimientos [%d]", i);
-			return(check_a(*stack_a));			
-		}
-		if ((*stack_a)->content < )
+		if(check_a(*stack_a) && (*stack_b))
+			i = 1000;
+		if((*stack_a)->content < ft_lstlast(*stack_a)->content)
+			reverse_rotate(stack_a, 'a');
+		if(check_a(*stack_a) && (*stack_b))
+			i = 1000;
+		if((*stack_a)->content > (*stack_a)->next->content)
+			swap_stack(*stack_a, 'a');
+		if(check_a(*stack_a) && (*stack_b))
+			i = 1000;
+		if((*stack_a)->content > ft_lstlast(*stack_a)->content)
+			rotate(stack_a, 'a');
+		if(check_a(*stack_a) && (*stack_b))
+			i = 1000;
+		if((*stack_a)->content < flag)
+			push(stack_a, stack_b, 'a');
+		if (check_a(*stack_a) && check_b(*stack_b) || ft_lstsize(*stack_b) == 1)
+			push(stack_b, stack_a, 'b');
+
+		if(check_a(*stack_a) && !(*stack_b))
+			i = 1000;		
+		i++;
+
 	}
 
 	return (check_a(*stack_a));
@@ -204,19 +251,19 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 int main (int argc, char * argv[])
 {
 	t_list	*stack_a;
-	//t_list	*stack_b;
+	t_list	*stack_b;
 	if (fill_stack(&stack_a, argv))
 	{
 		print_error();
 		return(0);
 	}
-/*
+
 	if (push_swap(&stack_a, &stack_b))
 		printf("\nOrdenado\n");
 	else
 		printf("\nNo esta ordenado\n");
 	
-	print_stacks(stack_a, stack_b);*/
+	print_stacks(stack_a, stack_b);
 
 	printf("%d", average(stack_a));
 }
