@@ -174,9 +174,9 @@ void print_stacks(t_list *stack_a, t_list *stack_b)
 	
 	printf("\na\t\t\tb\n\n");
 
-int i;
+long i;
 i = 0;
-	while (i < 10000000)
+	while (i < 100000000 >> 1)
 		i++;	
 }
 
@@ -229,42 +229,54 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 		if(check_a(*stack_a) && !(*stack_b))
 			return (check_a(*stack_a));
 		if((*stack_a)->content > ft_lstlast(*stack_a)->content && (*stack_a)->content > (*stack_a)->next->content)
-			reverse_rotate(stack_a, 'a');
+		{	reverse_rotate(stack_a, 'a');
 			print_stacks(*stack_a, *stack_b);
+		}
 		if(check_a(*stack_a) && !(*stack_b))
 			return (check_a(*stack_a));
-			print_stacks(*stack_a, *stack_b);
 		if((*stack_a)->content > ft_lstlast(*stack_a)->content)
+		{
 			reverse_rotate(stack_a, 'a');
 			print_stacks(*stack_a, *stack_b);
+
+		}
 		if(check_a(*stack_a) && !(*stack_b))
 			return (check_a(*stack_a));
-			print_stacks(*stack_a, *stack_b);
+
 		if((*stack_a)->content < ft_lstlast(*stack_a)->content && ((*stack_a)->content) < (*stack_a)->next->content && (ft_lstsize(*stack_a) > 2) && !check_a(*stack_a))
-			push(stack_a, stack_b, 'a');
+		{	push(stack_a, stack_b, 'a');
 			print_stacks(*stack_a, *stack_b);
+		}
 		if(check_a(*stack_a) && !(*stack_b))
 			return (check_a(*stack_a));
-print_stacks(*stack_a, *stack_b);
 		if ((*stack_a)->content > (*stack_a)->next->content)
+		{
 			swap_stack((*stack_a), 'a');
-		print_stacks(*stack_a, *stack_b);
+			print_stacks(*stack_a, *stack_b);
+		}
 		if (ft_lstsize(*stack_b) > 1)
 		{
 
 			 	if((*stack_b)->content < (*stack_b)->next->content && (*stack_b)->content > ft_lstlast(*stack_b)->content)
 				 {
 					swap_stack((*stack_b), 'b');
+					print_stacks(*stack_a, *stack_b);	
 					push(stack_b, stack_a, 'b');
+					print_stacks(*stack_a, *stack_b);	
 					swap_stack((*stack_b), 'b');
 					print_stacks(*stack_a, *stack_b);	 
 				 }
 				if((*stack_b)->content < ft_lstlast(*stack_b)->content)
+				{
 					reverse_rotate(stack_b, 'b');
 					print_stacks(*stack_a, *stack_b);
+
+				}
 				if((*stack_b)->content < ft_lstlast(*stack_b)->content && (*stack_b)->content < (*stack_b)->next->content)
+				{
 					reverse_rotate(stack_b, 'b');
-				print_stacks(*stack_a, *stack_b);
+					print_stacks(*stack_a, *stack_b);
+				}
 		}
 		while(check_a(*stack_a) && ft_lstsize(*stack_b) > 1)
 		{
@@ -277,7 +289,6 @@ print_stacks(*stack_a, *stack_b);
 			push(stack_b, stack_a, 'b');
 			print_stacks(*stack_a, *stack_b);
 		}
-		print_stacks(*stack_a, *stack_b);
 		i++;
 
 	}
