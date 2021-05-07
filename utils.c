@@ -6,12 +6,13 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 15:33:09 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/06 16:23:02 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/07 16:40:42 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./libft/libft.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 void print_error()
 {
@@ -147,17 +148,18 @@ void reverse_rotate_rr(t_list **stack_a, t_list **stack_b)
 
 void print_stacks(t_list *stack_a, t_list *stack_b)
 {
-	
+	 system("clear");
+	 printf("\n\n\n");
 	while (stack_a || stack_b)
 	{
 		if (stack_a)
 		{
-			printf("%d\t", stack_a->content);
+			printf("%d\t\t\t", stack_a->content);
 			stack_a = stack_a->next;
 			
 		}
 		else
-			printf(" \t");
+			printf(" \t\t\t");
 		if (stack_b)
 		{
 			printf("%d", stack_b->content);
@@ -170,8 +172,12 @@ void print_stacks(t_list *stack_a, t_list *stack_b)
 		printf("\n");	
 	}
 	
-	printf("\na\tb\n\n");
-	
+	printf("\na\t\t\tb\n\n");
+
+int i;
+i = 0;
+	while (i < 10000000)
+		i++;	
 }
 
 int		check_a (t_list *stack)
@@ -218,46 +224,60 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 
 	i = 0;
 	flag = 8;
-	while (i <= 8)
+	while (i <= 1000)
 	{
 		if(check_a(*stack_a) && !(*stack_b))
 			return (check_a(*stack_a));
 		if((*stack_a)->content > ft_lstlast(*stack_a)->content && (*stack_a)->content > (*stack_a)->next->content)
 			reverse_rotate(stack_a, 'a');
+			print_stacks(*stack_a, *stack_b);
 		if(check_a(*stack_a) && !(*stack_b))
 			return (check_a(*stack_a));
+			print_stacks(*stack_a, *stack_b);
 		if((*stack_a)->content > ft_lstlast(*stack_a)->content)
 			reverse_rotate(stack_a, 'a');
+			print_stacks(*stack_a, *stack_b);
 		if(check_a(*stack_a) && !(*stack_b))
 			return (check_a(*stack_a));
-		if((*stack_a)->content < ft_lstlast(*stack_a)->content && ((*stack_a)->content) < (*stack_a)->next->content && (ft_lstsize(*stack_a) > 2))
+			print_stacks(*stack_a, *stack_b);
+		if((*stack_a)->content < ft_lstlast(*stack_a)->content && ((*stack_a)->content) < (*stack_a)->next->content && (ft_lstsize(*stack_a) > 2) && !check_a(*stack_a))
 			push(stack_a, stack_b, 'a');
+			print_stacks(*stack_a, *stack_b);
 		if(check_a(*stack_a) && !(*stack_b))
 			return (check_a(*stack_a));
-		if((*stack_b) && check_a(*stack_a) && check_b(*stack_b))
-			push(stack_b, stack_a, 'b');
+print_stacks(*stack_a, *stack_b);
 		if ((*stack_a)->content > (*stack_a)->next->content)
 			swap_stack((*stack_a), 'a');
-		
+		print_stacks(*stack_a, *stack_b);
 		if (ft_lstsize(*stack_b) > 1)
 		{
-			while (!check_b(*stack_b))
-			{
 
-				if((*stack_b)->content < ft_lstlast(*stack_b)->content && (*stack_b)->content < (*stack_b)->next->content)
-					reverse_rotate(stack_b, 'b');
+			 	if((*stack_b)->content < (*stack_b)->next->content && (*stack_b)->content > ft_lstlast(*stack_b)->content)
+				 {
+					swap_stack((*stack_b), 'b');
+					push(stack_b, stack_a, 'b');
+					swap_stack((*stack_b), 'b');
+					print_stacks(*stack_a, *stack_b);	 
+				 }
 				if((*stack_b)->content < ft_lstlast(*stack_b)->content)
 					reverse_rotate(stack_b, 'b');
-				if ((*stack_b)->content < (*stack_b)->next->content)
-					swap_stack((*stack_b), 'b');
-			}
-				while(check_a(*stack_a) && check_b(*stack_b) && ft_lstsize(*stack_b) > 1)
-					 push(stack_b, stack_a, 'b');
+					print_stacks(*stack_a, *stack_b);
+				if((*stack_b)->content < ft_lstlast(*stack_b)->content && (*stack_b)->content < (*stack_b)->next->content)
+					reverse_rotate(stack_b, 'b');
+				print_stacks(*stack_a, *stack_b);
 		}
+		while(check_a(*stack_a) && ft_lstsize(*stack_b) > 1)
+		{
+			push(stack_b, stack_a, 'b');
+			print_stacks(*stack_a, *stack_b);
+		}
+			
 		if(ft_lstsize(*stack_b) == 1 && check_a(*stack_a))
 		{
 			push(stack_b, stack_a, 'b');
+			print_stacks(*stack_a, *stack_b);
 		}
+		print_stacks(*stack_a, *stack_b);
 		i++;
 
 	}
@@ -284,5 +304,4 @@ int main (int argc, char * argv[])
 	
 	print_stacks(stack_a, stack_b);
 
-	printf("%d", average(stack_a));
 }
