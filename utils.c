@@ -217,35 +217,53 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 	int i;
 
 	i = 0;
-	flag = 6;
-	while (i <= 1000)
+	flag = 8;
+	while (i <= 8)
 	{
 		if(check_a(*stack_a) && !(*stack_b))
 			return (check_a(*stack_a));
-
-		if((*stack_a)->content > (*stack_a)->next->content)
-			swap_stack(*stack_a, 'a');
-		while((*stack_a)->content <= flag)
-			push(stack_a, stack_b, 'a');
-		if(ft_lstlast(*stack_a)->content < flag)
+		if((*stack_a)->content > ft_lstlast(*stack_a)->content && (*stack_a)->content > (*stack_a)->next->content)
 			reverse_rotate(stack_a, 'a');
 		if(check_a(*stack_a) && !(*stack_b))
 			return (check_a(*stack_a));
+		if((*stack_a)->content > ft_lstlast(*stack_a)->content)
+			reverse_rotate(stack_a, 'a');
 		if(check_a(*stack_a) && !(*stack_b))
 			return (check_a(*stack_a));
-		while((*stack_b) && check_a(*stack_a))
+		if((*stack_a)->content < ft_lstlast(*stack_a)->content && ((*stack_a)->content) < (*stack_a)->next->content && (ft_lstsize(*stack_a) > 2))
+			push(stack_a, stack_b, 'a');
+		if(check_a(*stack_a) && !(*stack_b))
+			return (check_a(*stack_a));
+		if((*stack_b) && check_a(*stack_a) && check_b(*stack_b))
 			push(stack_b, stack_a, 'b');
-		if(check_a(*stack_a) && !(*stack_b))
-			return (check_a(*stack_a));
-		if((*stack_a)->next->content > flag)
+		if ((*stack_a)->content > (*stack_a)->next->content)
+			swap_stack((*stack_a), 'a');
+		
+		if (ft_lstsize(*stack_b) > 1)
 		{
-			swap_stack(*stack_a, 'a');
-			rotate(stack_a, 'a');
+			while (!check_b(*stack_b))
+			{
+
+				if((*stack_b)->content < ft_lstlast(*stack_b)->content && (*stack_b)->content < (*stack_b)->next->content)
+					reverse_rotate(stack_b, 'b');
+				if((*stack_b)->content < ft_lstlast(*stack_b)->content)
+					reverse_rotate(stack_b, 'b');
+				if ((*stack_b)->content < (*stack_b)->next->content)
+					swap_stack((*stack_b), 'b');
+			}
+				while(check_a(*stack_a) && check_b(*stack_b) && ft_lstsize(*stack_b) > 1)
+					 push(stack_b, stack_a, 'b');
+		}
+		if(ft_lstsize(*stack_b) == 1 && check_a(*stack_a))
+		{
+			push(stack_b, stack_a, 'b');
 		}
 		i++;
 
 	}
 
+
+	printf("[%d]", i);
 	return (check_a(*stack_a));
 }
 
