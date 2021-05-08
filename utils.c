@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 15:33:09 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/07 16:40:42 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/08 16:23:47 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,37 +223,33 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 	int i;
 
 	i = 0;
-	flag = 8;
+	flag = 0;
 	while (i <= 1000)
 	{
 		if(check_a(*stack_a) && !(*stack_b))
 			return (check_a(*stack_a));
-		if((*stack_a)->content > ft_lstlast(*stack_a)->content && (*stack_a)->content > (*stack_a)->next->content)
+		if ((*stack_a)->content > ft_lstlast(*stack_a)->content)
+			rotate(stack_a, 'a');
+		else if((*stack_a)->content > ft_lstlast(*stack_a)->content && (*stack_a)->content > (*stack_a)->next->content)
 		{	reverse_rotate(stack_a, 'a');
 			print_stacks(*stack_a, *stack_b);
 		}
-		if(check_a(*stack_a) && !(*stack_b))
-			return (check_a(*stack_a));
-		if((*stack_a)->content > ft_lstlast(*stack_a)->content)
+		else if((*stack_a)->content > ft_lstlast(*stack_a)->content)
 		{
 			reverse_rotate(stack_a, 'a');
 			print_stacks(*stack_a, *stack_b);
-
 		}
-		if(check_a(*stack_a) && !(*stack_b))
-			return (check_a(*stack_a));
-
-		if((*stack_a)->content < ft_lstlast(*stack_a)->content && ((*stack_a)->content) < (*stack_a)->next->content && (ft_lstsize(*stack_a) > 2) && !check_a(*stack_a))
+		else if((*stack_a)->content < ft_lstlast(*stack_a)->content && ((*stack_a)->content) < (*stack_a)->next->content && (ft_lstsize(*stack_a) > 2) && !check_a(*stack_a))
 		{	push(stack_a, stack_b, 'a');
 			print_stacks(*stack_a, *stack_b);
 		}
-		if(check_a(*stack_a) && !(*stack_b))
-			return (check_a(*stack_a));
-		if ((*stack_a)->content > (*stack_a)->next->content)
+		else if ((*stack_a)->content > (*stack_a)->next->content)
 		{
 			swap_stack((*stack_a), 'a');
 			print_stacks(*stack_a, *stack_b);
 		}
+		if(check_a(*stack_a) && !(*stack_b))
+			return (check_a(*stack_a));
 		if (ft_lstsize(*stack_b) > 1)
 		{
 
@@ -266,13 +262,13 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 					swap_stack((*stack_b), 'b');
 					print_stacks(*stack_a, *stack_b);	 
 				 }
-				if((*stack_b)->content < ft_lstlast(*stack_b)->content)
+				else if((*stack_b)->content < ft_lstlast(*stack_b)->content)
 				{
 					reverse_rotate(stack_b, 'b');
 					print_stacks(*stack_a, *stack_b);
 
 				}
-				if((*stack_b)->content < ft_lstlast(*stack_b)->content && (*stack_b)->content < (*stack_b)->next->content)
+				else if((*stack_b)->content < ft_lstlast(*stack_b)->content && (*stack_b)->content < (*stack_b)->next->content)
 				{
 					reverse_rotate(stack_b, 'b');
 					print_stacks(*stack_a, *stack_b);
@@ -308,6 +304,8 @@ int main (int argc, char * argv[])
 		return(0);
 	}
 
+	//push_swap(&stack_a, &stack_b);
+	
 	if (push_swap(&stack_a, &stack_b))
 		printf("\nOrdenado\n");
 	else
