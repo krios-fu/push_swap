@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 15:33:09 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/11 16:38:55 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/13 16:44:11 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,84 +224,76 @@ int average (t_list *stack)
 	return(i / 2);
 }
 
-int	push_swap(t_list **stack_a, t_list **stack_b)
+void push_swap_3(t_list **stack_a)
+{
+	int pos_1;
+	int pos_2;
+	int last;
+
+	pos_1 = (*stack_a)->content;
+	pos_2 = (*stack_a)->next->content;
+	last = ft_lstlast(*stack_a)->content;
+	if(pos_1 > pos_2 && pos_2 > last)
+	{
+		rotate(stack_a, 'a');
+		swap_stack(*stack_a, 'a');
+	}
+	else if(pos_2 > last && pos_1 < last)
+		{
+			swap_stack(*stack_a, 'a');
+			rotate(stack_a, 'a');
+		}
+	else if (last < pos_2 && pos_1 < pos_2)
+		reverse_rotate(stack_a,'a');
+	else if (pos_1 > pos_2 && pos_1 < last)
+				swap_stack(*stack_a,'a');
+	else if (pos_1 > pos_2 && pos_2 < last)
+			rotate(stack_a, 'a');
+}
+
+void push_swap_5(t_list **stack_a, t_list **stack_b)
 {
 	int len;
 	int i;
-	int flag;
 
-	flag = 0;
 	i = 0;
+	len = ft_lstsize(*stack_a);
+	while (!check_a(*stack_a, len))
+	{
+		while (i < 2)
+		{
+			push(stack_a, stack_b, 'a');
+			i++;
+		}
+		push_swap_3(stack_a);
+		if((*stack_b)->content < (*stack_b)->next->content)
+			swap_stack(*stack_b, 'b');
+		i = 0;
+		while (!check_a(*stack_a, len))
+		{
+			rotate(stack_a, 'a');
+			if ((*stack_b)->content > (*stack_a)->content && (*stack_b)->content < (*stack_a)->next->content)
+				push(stack_b, stack_a, 'b');
+		}
+	}
+	
+	
+}
+int	push_swap(t_list **stack_a, t_list **stack_b)
+{
+	int len;
 	len  = ft_lstsize(*stack_a);
 	while (!check_a(*stack_a, len))
 	{
-		if(check_a(*stack_a, len))
-			return (check_a(*stack_a, len));
-		if ((*stack_a)->content > (*stack_a)->next->content && (*stack_a)->next->content > ft_lstlast(*stack_a)->content)
+		if (len == 3)
+			push_swap_3(stack_a);
+		else if (len == 5)
+			push_swap_5(stack_a, stack_b);
+		else
 		{
-			swap_stack((*stack_a), 'a');
-			print_stacks(*stack_a, *stack_b);
+			printf("Error");
+			break ;
 		}
-		if ((*stack_a)->content > ft_lstlast(*stack_a)->content )
-		{
-			reverse_rotate(stack_a, 'a');
-			print_stacks(*stack_a, *stack_b);
-
-			flag = 1;
-		}
-		else if((*stack_a)->content < ft_lstlast(*stack_a)->content)
-		{
-			if (flag == 0)
-				rotate(stack_a, 'a');
-			flag = 0;
-			print_stacks(*stack_a, *stack_b);
-		}
-		if((*stack_a)->content < ft_lstlast(*stack_a)->content && ((*stack_a)->content) < (*stack_a)->next->content && (ft_lstsize(*stack_a) > 2))
-		{	push(stack_a, stack_b, 'a');
-			print_stacks(*stack_a, *stack_b);
-		}
-	
-		if(check_a(*stack_a, len))
-			return (check_a(*stack_a, len));
-		if (ft_lstsize(*stack_b) > 1)
-		{
-
-			if((*stack_b)->content < ft_lstlast(*stack_b)->content)
-			{
-				rotate(stack_b, 'b');
-				print_stacks(*stack_a, *stack_b);
-			}
-			if (ft_lstsize(*stack_b) > 2)
-			{
-				
-				if((*stack_b)->content < (*stack_b)->next->content && (*stack_b)->content < (*stack_b)->next->next->content)
-				{
-					swap_stack((*stack_b), 'b');
-					print_stacks(*stack_a, *stack_b);	
-					push(stack_b, stack_a, 'b');
-					print_stacks(*stack_a, *stack_b);	
-					swap_stack((*stack_b), 'b');
-					push(stack_b, stack_a, 'b');
-					print_stacks(*stack_a, *stack_b);	 
-				}
-				else if ((*stack_b)->content < (*stack_b)->next->content)
-						{
-						swap_stack((*stack_b), 'b');
-						print_stacks(*stack_a, *stack_b);
-						}
-			}
-			if(ft_lstlast(*stack_b)->content > (*stack_b)->content)
-			{
-				reverse_rotate(stack_b, 'b');
-				print_stacks(*stack_a, *stack_b);
-			}
-		}
-		while(check_a(*stack_a, len - ft_lstsize(*stack_b)) && ft_lstsize(*stack_b) > 0)
-		{
-			push(stack_b, stack_a, 'b');
-			print_stacks(*stack_a, *stack_b);
-		}
-			
 	}
 
 	return (check_a(*stack_a, len));
@@ -317,13 +309,6 @@ int main (int argc, char * argv[])
 		return(0);
 	}
 
-	//push_swap(&stack_a, &stack_b);
+	push_swap(&stack_a, &stack_b);
 	
-	if (push_swap(&stack_a, &stack_b))
-		printf("\nOrdenado\n");
-	else
-		printf("\nNo esta ordenado\n");
-	
-	print_stacks(stack_a, stack_b);
-
 }
