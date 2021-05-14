@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 15:33:09 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/13 16:44:11 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/14 16:53:21 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void print_error()
 	printf("Error\n");
 	exit(0);
 }
+
+
 
 void del_first_node(t_list **stack)
 {
@@ -224,6 +226,72 @@ int average (t_list *stack)
 	return(i / 2);
 }
 
+int get_pos(t_list *stack_a, int content_b)
+{
+	int pos;
+
+	pos = 0;
+	while(stack_a)
+	{
+		if (stack_a->content < content_b)
+			pos++;
+		stack_a = stack_a->next;
+	}
+	return (pos);
+}
+void get_pos_0(t_list **stack_a, t_list **stack_b)
+{
+	push(stack_b, stack_a, 'b');
+}
+
+void get_pos_1(t_list **stack_a, t_list **stack_b)
+{
+	push(stack_b, stack_a, 'b');
+	swap_stack(*stack_a, 'a');
+}
+
+void get_pos_2(t_list **stack_a, t_list **stack_b)
+{
+	reverse_rotate(stack_a, 'a');
+	push(stack_b, stack_a, 'b');
+	rotate(stack_a, 'a');
+	rotate(stack_a, 'a');
+}
+
+void get_pos_3(t_list **stack_a, t_list **stack_b)
+{
+	push(stack_b, stack_a, 'b');
+	rotate(stack_a, 'a');
+}
+
+void get_pos_3_u(t_list **stack_a, t_list **stack_b)
+{
+	rotate(stack_a, 'a');
+	push(stack_b, stack_a, 'b');
+	swap_stack(*stack_a, 'a');
+	reverse_rotate(stack_a, 'a');
+}
+
+/*
+** Función que apunta a una lista de funciones
+**	para evitar condicionales extensas
+**
+**
+*/
+void *list_functions()
+{
+	void (**ptr_func)(t_list **, t_list **);
+
+	ptr_func = malloc(sizeof(*ptr_func) * 5);
+	ptr_func[0] = &get_pos_0;
+	ptr_func[1] = &get_pos_1;
+	ptr_func[2] = &get_pos_2;
+	ptr_func[3] = &get_pos_3;
+	ptr_func[4] = &get_pos_3_u;
+
+	return (ptr_func);
+}
+
 void push_swap_3(t_list **stack_a)
 {
 	int pos_1;
@@ -255,9 +323,13 @@ void push_swap_5(t_list **stack_a, t_list **stack_b)
 {
 	int len;
 	int i;
+	int pos;
+	void (**ptr_func)(t_list **, t_list **);
 
 	i = 0;
+	pos = 0;
 	len = ft_lstsize(*stack_a);
+	ptr_func = list_functions();
 	while (!check_a(*stack_a, len))
 	{
 		while (i < 2)
@@ -266,15 +338,17 @@ void push_swap_5(t_list **stack_a, t_list **stack_b)
 			i++;
 		}
 		push_swap_3(stack_a);
-		if((*stack_b)->content < (*stack_b)->next->content)
-			swap_stack(*stack_b, 'b');
-		i = 0;
-		while (!check_a(*stack_a, len))
-		{
-			rotate(stack_a, 'a');
-			if ((*stack_b)->content > (*stack_a)->content && (*stack_b)->content < (*stack_a)->next->content)
-				push(stack_b, stack_a, 'b');
-		}
+		pos = get_pos(*stack_a, (*stack_b)->content);
+		(*ptr_func[pos])(stack_a, stack_b);
+		
+		pos = get_pos(*stack_a, (*stack_b)->content);
+		if (pos == 4)
+			pos = 3;
+		else if(pos == 2)
+				pos = 4;
+		else if (pos == 3)
+				pos = 2;
+		(*ptr_func[pos])(stack_a, stack_b);
 	}
 	
 	
@@ -287,13 +361,8 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 	{
 		if (len == 3)
 			push_swap_3(stack_a);
-		else if (len == 5)
+		if (len == 5)
 			push_swap_5(stack_a, stack_b);
-		else
-		{
-			printf("Error");
-			break ;
-		}
 	}
 
 	return (check_a(*stack_a, len));
