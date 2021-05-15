@@ -5,27 +5,68 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/31 15:22:04 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/03/31 16:41:29 by krios-fu         ###   ########.fr       */
+/*   Created: 2021/03/31 15:33:09 by krios-fu          #+#    #+#             */
+/*   Updated: 2021/05/15 16:43:06 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "./libft/libft.h"
+#include "push_swap.h"
+
+void print_stacks(t_list *stack_a, t_list *stack_b)
+{
+	system("clear");
+	printf("\n\n\n");
+	printf("\na\t\t\tb\n\n");
+	while (stack_a || stack_b)
+	{
+		if (stack_a)
+		{
+			printf("%d\t\t\t", stack_a->content);
+			stack_a = stack_a->next;
+			
+		}
+		else
+			printf(" \t\t\t");
+		if (stack_b)
+		{
+			printf("%d", stack_b->content);
+			stack_b = stack_b->next;
+			
+		}
+		else
+			printf(" ");
+		
+		printf("\n");	
+	}
+}
+
+
+
+int	push_swap(t_list **stack_a, t_list **stack_b)
+{
+	int len;
+	len  = ft_lstsize(*stack_a);
+	while (!check_a(*stack_a, len))
+	{
+		if (len == 3)
+			push_swap_case_three(stack_a);
+		if (len == 5)
+			push_swap_case_five(stack_a, stack_b);
+	}
+
+	return (check_a(*stack_a, len));
+}
 
 int main (int argc, char * argv[])
 {
-
-	int i;
-	char ** k;
-
-	i = 1;
-	while (i < argc)
+	t_list	*stack_a;
+	t_list	*stack_b;
+	if (fill_stack(&stack_a, argv))
 	{
-		printf("[%s]\n", &argv[i][0]);
-		i++;
+		print_error();
+		return(0);
 	}
-		
-	return (0);
+
+	push_swap(&stack_a, &stack_b);
+
 }

@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 14:58:27 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/14 15:02:11 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/15 14:25:17 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,6 @@ typedef struct s_list
 	int			content;
 	struct s_list	*next;
 }				t_list;
-
-typedef struct s_functions
-{
-	void		(*fuctions)(t_list, t_list );
-	struct s_functions *next;
-	
-}				t_functions;
 
 int				ft_atoi(const char *str);
 void			ft_bzero(void *s, size_t n);
