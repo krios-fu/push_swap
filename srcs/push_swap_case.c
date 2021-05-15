@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 16:35:58 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/15 16:44:01 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/15 22:02:24 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,77 @@ void	push_swap_case_five(t_list **stack_a, t_list **stack_b)
 		(*case_swap_len_five[pos])(stack_a, stack_b);
 	}	
 	free(case_swap_len_five);
+}
+
+int	get_iterative(int hold, int len_stack)
+{
+	if (hold <= (len_stack / 2))
+		return (hold - 1);
+	else
+		return (len_stack - hold + 1);
+}
+
+void	move_hold_first(t_list **stack_a, t_list **stack_b)
+{
+	int	len_stack;
+	int	hold_first;
+	int	hold_second;
+	int	iter;
+
+	len_stack = ft_lstsize(*stack_a);
+	hold_first = get_min_pos_hold_first(*stack_a);
+	hold_second = get_min_pos_hold_second(*stack_a, hold_first);
+	iter = get_iterative(hold_first, len_stack);
+	while (iter > 0)
+	{
+		if (hold_first > (len_stack / 2))
+			reverse_rotate(stack_a, 'a');
+		else
+			rotate(stack_a, 'a');
+		iter--;
+	}
+}
+
+void	move_hold_second(t_list **stack_a, t_list **stack_b)
+{
+	int	len_stack;
+	int	hold_first;
+	int	hold_second;
+	int	iter;
+
+	len_stack = ft_lstsize(*stack_a);
+	hold_first = get_min_pos_hold_first(*stack_a);
+	hold_second = get_min_pos_hold_second(*stack_a, hold_first);
+	if (get_iterative(hold_second, len_stack)
+		< get_iterative(hold_first, len_stack))
+	{
+		iter = get_iterative(hold_second, len_stack);
+		while (iter > 0)
+		{
+			if (hold_second > (len_stack / 2))
+				reverse_rotate(stack_a, 'a');
+			else
+				rotate(stack_a, 'a');
+			iter--;
+		}
+	}
+	else
+		move_hold_first(stack_a, stack_b);
+}
+
+void	push_swap_case(t_list **stack_a, t_list **stack_b)
+{
+	int	len_stack;
+
+	len_stack = ft_lstsize(*stack_a);
+	if (len_stack > 1)
+	{
+		move_hold_second(stack_a, stack_a);
+		push(stack_a, stack_b, 'a');
+		if ((*stack_b)->next && (*stack_b)->content < (*stack_b)->next->content)
+			swap_stack(*stack_b, 'b');
+		push_swap_case(stack_a, stack_b);
+	}
+	else
+		push(stack_a, stack_b, 'a');
 }

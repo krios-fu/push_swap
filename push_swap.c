@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 15:33:09 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/15 16:43:06 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/15 19:48:25 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void print_stacks(t_list *stack_a, t_list *stack_b)
 {
-	system("clear");
-	printf("\n\n\n");
+	//system("clear");
+	//printf("\n\n\n");
 	printf("\na\t\t\tb\n\n");
 	while (stack_a || stack_b)
 	{
@@ -66,7 +66,8 @@ int main (int argc, char * argv[])
 		print_error();
 		return(0);
 	}
-
-	push_swap(&stack_a, &stack_b);
+	push_swap_case(&stack_a, &stack_b);
+	print_stacks(stack_a, stack_b);
+	//push_swap(&stack_a, &stack_b);
 
 }

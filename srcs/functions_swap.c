@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:41:18 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/15 16:26:37 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/15 21:34:46 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	ft_swap (int *content_a, int *content_b, char c)
 
 void	swap_stack (t_list *stack, char c)
 {
-	ft_swap(&stack->content, &stack->next->content, c);
+	if (stack->next)
+	{
+		ft_swap(&stack->content, &stack->next->content, c);
+	}
 }
 
 void	swap_ss (t_list *stack_a, t_list *stack_b)
