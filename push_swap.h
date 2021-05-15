@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:21:00 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/15 19:09:06 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/15 22:29:53 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ int     get_min_pos_hold_first(t_list *stack_a);
 int     get_min_pos_hold_second(t_list *stack_a, int pos_hold_first);
 void    print_stacks(t_list *stack_a, t_list *stack_b);
 void	push_swap_case(t_list **stack_a, t_list **stack_b);
+void	move_hold_second(t_list **stack_a, t_list **stack_b);
+void	move_hold_first(t_list **stack_a, t_list **stack_b);
 
 #endif
