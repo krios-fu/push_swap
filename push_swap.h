@@ -40,11 +40,13 @@ void	case_four(t_list **stack_a, t_list **stack_b);
 int		get_pos_stack(t_list *stack_a, int content_b);
 void	push_swap_case_three(t_list **stack_a);
 void	push_swap_case_five(t_list **stack_a, t_list **stack_b);
-int     get_min_pos_hold_first(t_list *stack_a);
-int     get_min_pos_hold_second(t_list *stack_a, int pos_hold_first);
-void    print_stacks(t_list *stack_a, t_list *stack_b);
+int		get_min_pos_hold_first(t_list *stack_a);
+int		get_min_pos_hold_second(t_list *stack_a, int pos_hold_first);
+void	print_stacks(t_list *stack_a, t_list *stack_b);
 void	push_swap_case(t_list **stack_a, t_list **stack_b);
 void	move_hold_second(t_list **stack_a, t_list **stack_b);
 void	move_hold_first(t_list **stack_a, t_list **stack_b);
+int		get_max_content(t_list *stack);
+void	push_stack_a(t_list **stack_a, t_list **stack_b);
 
 #endif

@@ -75,8 +75,8 @@ void	push_swap_case(t_list **stack_a, t_list **stack_b)
 	{
 		move_hold_second(stack_a, stack_a);
 		push(stack_a, stack_b, 'a');
-		if ((*stack_b)->next && (*stack_b)->content < (*stack_b)->next->content)
-			swap_stack(*stack_b, 'b');
+		 if ((*stack_b)->next && (*stack_b)->content < (*stack_b)->next->content)
+			 swap_stack(*stack_b, 'b');
 		push_swap_case(stack_a, stack_b);
 	}
 	else
