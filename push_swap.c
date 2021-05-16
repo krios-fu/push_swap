@@ -45,7 +45,6 @@ void print_stacks(t_list *stack_a, t_list *stack_b)
 int	push_swap(t_list **stack_a, t_list **stack_b)
 {
 	int		len;
-	t_list	*ptr_stack;
 
 	len  = ft_lstsize(*stack_a);
 	while (!check_a(*stack_a, len))
@@ -55,8 +54,10 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 		if (len == 5)
 			push_swap_case_five(stack_a, stack_b);
 		else
-			push_swap_case(stack_a, stack_b);
-		push_stack_a(stack_a, stack_b);
+		{
+			push_swap_case(stack_a, stack_b, get_min_pos_hold_first(*stack_a));
+		}
+
 	}
 
 	return (check_a(*stack_a, len));
@@ -73,6 +74,7 @@ int main (int argc, char * argv[])
 	}
 	
 	push_swap(&stack_a, &stack_b);
+	//printf("%d", get_min_pos_hold_first(stack_a));
 	//push_swap_case(&stack_a, &stack_b);
 	//print_stacks(stack_a, stack_b);
 

@@ -66,19 +66,67 @@ void	push_swap_case_five(t_list **stack_a, t_list **stack_b)
 	free(case_swap_len_five);
 }
 
-void	push_swap_case(t_list **stack_a, t_list **stack_b)
+void	rota_min_stack_b(t_list **stack_b)
+{
+	int hold;
+	int iter;
+	int len_stack;
+
+	len_stack = ft_lstsize(*stack_b);
+	hold = 0;
+	iter = 0;
+	if(len_stack >= 2)
+	{
+		//hold = get_min_pos_hold_first(*stack_b);
+		 hold = get_max_content(*stack_b);
+		iter = get_iterative(hold, len_stack);
+		while (iter > 0)
+		{
+			if (hold > (len_stack / 2))
+				reverse_rotate(stack_b, 'b');
+			else
+				rotate(stack_b, 'b');
+			iter--;
+			//print_stacks()
+		}
+	}
+}
+int		get_content(t_list *stack, int content)
+{
+	int i;
+
+	i = 1;
+	while (i < content)
+	{
+		stack = stack->next;
+		i++;
+	}
+	return(stack->content);
+
+}
+void	push_swap_case(t_list **stack_a, t_list **stack_b, int hold_first)
 {
 	int	len_stack;
+	int i;
+	int aux;
 
+	aux = 0;
+	i = 0;
 	len_stack = ft_lstsize(*stack_a);
-	if (len_stack > 1)
+	if (!check_a(*stack_a, len_stack + ft_lstsize(*stack_b)))
 	{
-		move_hold_second(stack_a, stack_a);
-		push(stack_a, stack_b, 'a');
-		 if ((*stack_b)->next && (*stack_b)->content < (*stack_b)->next->content)
-			 swap_stack(*stack_b, 'b');
-		push_swap_case(stack_a, stack_b);
+		while (i < 5)
+		{
+			print_stacks(*stack_a, *stack_b);
+			move_hold_second(stack_a, stack_b, hold_first);
+			rota_min_stack_b(stack_b);
+			push(stack_a, stack_b, 'a');
+			hold_first = get_content(*stack_a, get_next_min(*stack_a, hold_first));
+			i++;
+		}
+			aux = (*stack_b)->content;
+			push_stack_a(stack_a, stack_b);
+			push_swap_case(stack_a, stack_b, get_content(*stack_a, get_next_min(*stack_a, aux)));
 	}
-	else
-		push(stack_a, stack_b, 'a');
+
 }

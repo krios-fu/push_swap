@@ -34,6 +34,35 @@ int	get_min_pos_hold_first(t_list *stack_a)
 	return (pos);
 }
 
+int	get_next_min(t_list *stack_a, int ref)
+{
+	int	len;
+	int	min;
+	int	pos;
+
+	len = 1;
+	min = 0;
+	pos = 0;
+	while (stack_a)
+	{  
+		if (stack_a->content > ref)
+		{
+			if (min == 0)
+			{
+				min = stack_a->content;;
+			}
+			if (min >= stack_a->content)
+			{
+				min = stack_a->content;
+				pos = len;
+			}
+		}
+		stack_a = stack_a->next;
+		len++;
+	}
+	return (pos);
+}
+
 int	get_min_pos_hold_second(t_list *stack_a, int pos_hold_first)
 {
 	int	len;
@@ -70,7 +99,7 @@ int	get_iterative(int hold, int len_stack)
 		return (len_stack - hold + 1);
 }
 
-void	move_hold_first(t_list **stack_a, t_list **stack_b)
+void	move_hold_first(t_list **stack_a, t_list **stack_b, int start)
 {
 	int	len_stack;
 	int	hold_first;
@@ -78,8 +107,8 @@ void	move_hold_first(t_list **stack_a, t_list **stack_b)
 	int	iter;
 
 	len_stack = ft_lstsize(*stack_a);
-	hold_first = get_min_pos_hold_first(*stack_a);
-	hold_second = get_min_pos_hold_second(*stack_a, hold_first);
+	hold_first = get_next_min(*stack_a, start);
+	hold_second = get_next_min(*stack_a, hold_first);
 	iter = get_iterative(hold_first, len_stack);
 	while (iter > 0)
 	{
@@ -91,7 +120,7 @@ void	move_hold_first(t_list **stack_a, t_list **stack_b)
 	}
 }
 
-void	move_hold_second(t_list **stack_a, t_list **stack_b)
+void	move_hold_second(t_list **stack_a, t_list **stack_b, int start)
 {
 	int	len_stack;
 	int	hold_first;
@@ -99,8 +128,8 @@ void	move_hold_second(t_list **stack_a, t_list **stack_b)
 	int	iter;
 
 	len_stack = ft_lstsize(*stack_a);
-	hold_first = get_min_pos_hold_first(*stack_a);
-	hold_second = get_min_pos_hold_second(*stack_a, hold_first);
+	hold_first = get_next_min(*stack_a, start);
+	hold_second = get_next_min(*stack_a, hold_first);
 	if (get_iterative(hold_second, len_stack)
 		< get_iterative(hold_first, len_stack))
 	{
@@ -115,10 +144,8 @@ void	move_hold_second(t_list **stack_a, t_list **stack_b)
 		}
 	}
 	else
-		move_hold_first(stack_a, stack_b);
+		move_hold_first(stack_a, stack_b, start);
 }
-
-#include "../push_swap.h"
 
 int	get_max_content(t_list *stack)
 {
