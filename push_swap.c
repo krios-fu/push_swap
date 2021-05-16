@@ -55,7 +55,8 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 			push_swap_case_five(stack_a, stack_b);
 		else
 		{
-			push_swap_case(stack_a, stack_b, get_min_pos_hold_first(*stack_a));
+			//printf("[[%d]]", get_content( *stack_a, get_min_pos_hold_first(*stack_a)));
+			push_swap_case(stack_a, stack_b, get_content( *stack_a, get_min_pos_hold_first(*stack_a)));
 		}
 
 	}

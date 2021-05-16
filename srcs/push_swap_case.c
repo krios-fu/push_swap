@@ -108,14 +108,14 @@ void	push_swap_case(t_list **stack_a, t_list **stack_b, int hold_first)
 {
 	int	len_stack;
 	int i;
-	int aux;
+	int re_start;
 
-	aux = 0;
+	re_start = 0;
 	i = 0;
 	len_stack = ft_lstsize(*stack_a);
 	if (!check_a(*stack_a, len_stack + ft_lstsize(*stack_b)))
 	{
-		while (i < 5)
+		while (i < 20)
 		{
 			print_stacks(*stack_a, *stack_b);
 			move_hold_second(stack_a, stack_b, hold_first);
@@ -124,9 +124,9 @@ void	push_swap_case(t_list **stack_a, t_list **stack_b, int hold_first)
 			hold_first = get_content(*stack_a, get_next_min(*stack_a, hold_first));
 			i++;
 		}
-			aux = (*stack_b)->content;
+			re_start = (*stack_b)->content;
 			push_stack_a(stack_a, stack_b);
-			push_swap_case(stack_a, stack_b, get_content(*stack_a, get_next_min(*stack_a, aux)));
+			push_swap_case(stack_a, stack_b, re_start);
 	}
 
 }

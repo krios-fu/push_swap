@@ -108,7 +108,7 @@ void	move_hold_first(t_list **stack_a, t_list **stack_b, int start)
 
 	len_stack = ft_lstsize(*stack_a);
 	hold_first = get_next_min(*stack_a, start);
-	hold_second = get_next_min(*stack_a, hold_first);
+	hold_second = get_next_min(*stack_a, get_content(*stack_a, hold_first));
 	iter = get_iterative(hold_first, len_stack);
 	while (iter > 0)
 	{
@@ -129,7 +129,7 @@ void	move_hold_second(t_list **stack_a, t_list **stack_b, int start)
 
 	len_stack = ft_lstsize(*stack_a);
 	hold_first = get_next_min(*stack_a, start);
-	hold_second = get_next_min(*stack_a, hold_first);
+	hold_second = get_next_min(*stack_a, get_content(*stack_a, hold_first));
 	if (get_iterative(hold_second, len_stack)
 		< get_iterative(hold_first, len_stack))
 	{

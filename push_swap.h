@@ -50,5 +50,6 @@ void	move_hold_first(t_list **stack_a, t_list **stack_b, int start);
 int		get_max_content(t_list *stack);
 void	push_stack_a(t_list **stack_a, t_list **stack_b);
 int		get_iterative(int hold, int len_stack);
+int		get_content(t_list *stack, int content);
 
 #endif
