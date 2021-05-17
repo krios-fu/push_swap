@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 16:35:58 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/15 22:10:23 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/17 18:53:27 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int		get_content(t_list *stack, int content)
 {
 	int i;
 
-	i = 1;
+	i = 0;
 	while (i < content)
 	{
 		stack = stack->next;
@@ -104,29 +104,74 @@ int		get_content(t_list *stack, int content)
 	return(stack->content);
 
 }
-void	push_swap_case(t_list **stack_a, t_list **stack_b, int hold_first)
+
+int		get_position_content(t_list *stack, int content)
+{
+	int pos;
+
+	pos= 0;
+	while(stack)
+	{
+		if (stack->content == content)
+			return(pos);
+			
+		stack = stack->next;
+		pos++;
+	}
+	return(-1);
+}
+int	*ft_chuck (t_list *stack, int *array, int len)
+{
+	int *chuck;
+	int i;
+
+	i = 0;
+	chuck = (int *)malloc(sizeof(int)*len);
+	if(!chuck)
+		print_error();
+	
+	while (i < len)
+	{
+		chuck[i] = get_position_content(stack, array[i]);
+		i++;
+	}
+	return(chuck);
+	
+}
+void	push_swap_case(t_list **stack_a, t_list **stack_b, int *sort_array)
 {
 	int	len_stack;
 	int i;
 	int re_start;
+	int *chuck;
 
 	re_start = 0;
 	i = 0;
+	chuck = ft_chuck(*stack_a, sort_array, 20);
+	ft_sort_array(chuck, 20);
+
+
 	len_stack = ft_lstsize(*stack_a);
-	if (!check_a(*stack_a, len_stack + ft_lstsize(*stack_b)))
+	if (len_stack >= 20)
 	{
 		while (i < 20)
 		{
-			print_stacks(*stack_a, *stack_b);
-			move_hold_second(stack_a, stack_b, hold_first);
-			rota_min_stack_b(stack_b);
+			//print_stacks(*stack_a, *stack_b);
+			move_hold(stack_a, chuck[0]);
 			push(stack_a, stack_b, 'a');
-			hold_first = get_content(*stack_a, get_next_min(*stack_a, hold_first));
+			free(sort_array);
+			free(chuck);
+			sort_array = fill_array_int(*stack_a);
+	 		ft_sort_array(sort_array, ft_lstsize(*stack_a));
+			chuck = ft_chuck(*stack_a, sort_array, 20);
+			ft_sort_array(chuck, 20);
 			i++;
 		}
-			re_start = (*stack_b)->content;
-			push_stack_a(stack_a, stack_b);
-			push_swap_case(stack_a, stack_b, re_start);
+			free(chuck);
+			free(sort_array);
+			
+			sort_array = fill_array_int(*stack_a);
+	 		ft_sort_array(sort_array, ft_lstsize(*stack_a));
+			push_swap_case(stack_a, stack_b, sort_array);
 	}
-
 }

@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 17:33:25 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/15 22:30:27 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/17 17:59:58 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,20 +99,15 @@ int	get_iterative(int hold, int len_stack)
 		return (len_stack - hold + 1);
 }
 
-void	move_hold_first(t_list **stack_a, t_list **stack_b, int start)
+void	move_hold(t_list **stack_a, int chuck)
 {
 	int	len_stack;
-	int	hold_first;
-	int	hold_second;
 	int	iter;
 
-	len_stack = ft_lstsize(*stack_a);
-	hold_first = get_next_min(*stack_a, start);
-	hold_second = get_next_min(*stack_a, get_content(*stack_a, hold_first));
-	iter = get_iterative(hold_first, len_stack);
+	iter = get_iterative(chuck, len_stack);
 	while (iter > 0)
 	{
-		if (hold_first > (len_stack / 2))
+		if (chuck > (len_stack / 2))
 			reverse_rotate(stack_a, 'a');
 		else
 			rotate(stack_a, 'a');
@@ -120,7 +115,7 @@ void	move_hold_first(t_list **stack_a, t_list **stack_b, int start)
 	}
 }
 
-void	move_hold_second(t_list **stack_a, t_list **stack_b, int start)
+/*void	move_hold_second(t_list **stack_a, t_list **stack_b, int start)
 {
 	int	len_stack;
 	int	hold_first;
@@ -145,7 +140,7 @@ void	move_hold_second(t_list **stack_a, t_list **stack_b, int start)
 	}
 	else
 		move_hold_first(stack_a, stack_b, start);
-}
+}*/
 
 int	get_max_content(t_list *stack)
 {
