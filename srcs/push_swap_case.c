@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 16:35:58 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/17 18:53:27 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/18 20:29:35 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,12 @@ void	rota_min_stack_b(t_list **stack_b)
 		}
 	}
 }
-int		get_content(t_list *stack, int content)
+int		get_content(t_list *stack, int pos)
 {
 	int i;
 
 	i = 0;
-	while (i < content)
+	while (i < pos)
 	{
 		stack = stack->next;
 		i++;

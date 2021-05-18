@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:35:17 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/15 16:31:33 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/18 20:30:14 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ int	check_a (t_list *stack, int len)
 		return (0);
 }
 
-int	check_b (t_list *stack)
+int	check_a_equals(t_list *stack, int pivote)
 {
-	while (stack->next)
+	while (stack)
 	{
-		if (stack->content > stack->next->content)
+		if (stack->content >= pivote)
 			stack = stack->next;
 		else
 			return (0);
 	}
-	return (1);
+		return (1);
 }
 
 int	get_pos_stack(t_list *stack_a, int content_b)
