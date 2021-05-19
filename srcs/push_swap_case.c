@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 16:35:58 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/18 20:29:35 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/19 22:49:18 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,49 @@ void	push_swap_case_three(t_list **stack_a)
 		rotate(stack_a, 'a');
 }
 
+void	push_case_three_stack_b(t_list **stack_b)
+{
+	int	pos_1;
+	int	pos_2;
+	int	last;
+
+	pos_1 = (*stack_b)->content;
+	pos_2 = (*stack_b)->next->content;
+	last = ft_lstlast(*stack_b)->content;
+	if (pos_1 < pos_2 && pos_1 < last)
+	{
+		rotate(stack_b, 'b');
+	}
+	else if (pos_1 < last && pos_1 > pos_2)
+	{
+		reverse_rotate(stack_b, 'b');
+	}
+	else if (last > pos_2 && last < pos_1)
+	{
+		reverse_rotate(stack_b, 'b');
+		swap_stack(*stack_b, 'b');
+		
+	}
+	else if (pos_1 < pos_2 && pos_2 < last)
+	{
+		swap_stack(*stack_b, 'b');
+		reverse_rotate(stack_b, 'b');
+		
+	}
+	else if (pos_1 < pos_2 && pos_1 > last)
+		swap_stack(*stack_b, 'b');
+}
+
 void	push_swap_case_five(t_list **stack_a, t_list **stack_b)
 {
-	int		len;
+	//int		len;
 	int		pos;
 	void	(**case_swap_len_five)(t_list **, t_list **);
 
 	pos = 0;
 	case_swap_len_five = case_swap();
-	while (!check_a(*stack_a, len))
-	{
+	//while (!check_a(*stack_a, 5))
+	//{
 		while (ft_lstsize(*stack_a) > 3)
 			push(stack_a, stack_b, 'a');
 		push_swap_case_three(stack_a);
@@ -62,7 +95,7 @@ void	push_swap_case_five(t_list **stack_a, t_list **stack_b)
 		else if (pos == 3)
 			pos = 2;
 		(*case_swap_len_five[pos])(stack_a, stack_b);
-	}	
+	//}	
 	free(case_swap_len_five);
 }
 

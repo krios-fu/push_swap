@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:21:00 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/18 20:25:20 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/19 17:22:12 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	case_three(t_list **stack_a, t_list **stack_b);
 void	case_four(t_list **stack_a, t_list **stack_b);
 int		get_pos_stack(t_list *stack_a, int content_b);
 void	push_swap_case_three(t_list **stack_a);
+void	push_case_three_stack_b(t_list **stack_a);
 void	push_swap_case_five(t_list **stack_a, t_list **stack_b);
 int		get_min_pos_hold_first(t_list *stack_a);
 int		get_next_min(t_list *stack_a, int ref);
