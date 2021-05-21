@@ -28,6 +28,7 @@ clean:
 fclean: clean
 		@rm -rf libft.a
 		@rm -rf push_swap
+		@rm -rf *.t
 	
 re: clean all
 
