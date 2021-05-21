@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 15:33:09 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/21 22:17:30 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/21 22:35:51 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void recursive_sort_b(t_list **stack_a, t_list **stack_b, int ref, int status, i
 	sort_array_b = fill_array_int(*stack_b);
 	ft_sort_array(sort_array_b, ft_lstsize(*stack_b));
 	len_b = ft_lstsize(*stack_b);
+	//printf("ref [[[[[%d]]]]", ref);
+	//print_stacks(*stack_a, *stack_b);
 	pivote_b = sort_array_b[len_b / 2 - 1];
 	if (len_b == 3)
 		pivote_b = sort_array_b[2];
@@ -69,7 +71,9 @@ void recursive_sort_b(t_list **stack_a, t_list **stack_b, int ref, int status, i
 		while (ft_lstsize(*stack_b) > (len_b / 2) && ft_lstsize(*stack_b) > 2)
 		{
 			if (((len_b % 2 != 0) && (*stack_b)->content == sort_array_b[len_b / 2 + 1])|| (len_b == 3  && (*stack_b)->content == pivote_b))
-				push(stack_b, stack_a, 'b');
+				{	//ref = (*stack_b)->content;
+					push(stack_b, stack_a, 'b');
+				}
 			else if((*stack_b)->content > pivote_b)
 				push(stack_b, stack_a, 'b');
 				else 
@@ -77,7 +81,6 @@ void recursive_sort_b(t_list **stack_a, t_list **stack_b, int ref, int status, i
 		}
 		if (*stack_b)
 			recursive_sort_b(stack_a, stack_b, ref, status, min_top);
-		ref = pivote_b;
 	}
 	else
 	{
@@ -153,6 +156,7 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 			 while ((*stack_a)->content != sort_array[0])
 			 {
 			 	push(stack_a, stack_b, 'a');
+				 print_stacks(*stack_a, *stack_b);
 			 }
 				recursive_sort_b(stack_a, stack_b, sort_array[0], 1, sort_array[0]);
 			if (len % 2 != 0)
@@ -160,7 +164,7 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 				push(stack_b, stack_a, 'b');
 				rotate(stack_a, 'a');
 			}
-				print_stacks(*stack_a, *stack_b);
+				 print_stacks(*stack_a, *stack_b);
 			free(sort_array);
 			break ;
 		}
