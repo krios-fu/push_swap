@@ -60,9 +60,6 @@ void recursive_sort_b(t_list **stack_a, t_list **stack_b, int ref, int status, i
 	sort_array_b = fill_array_int(*stack_b);
 	ft_sort_array(sort_array_b, ft_lstsize(*stack_b));
 	len_b = ft_lstsize(*stack_b);
-	//printf("ref [[[[[%d]]]]", ref);
-	//printf ("mod [[[%d]]]", min_top);
-	//print_stacks(*stack_a, *stack_b);
 	pivote_b = sort_array_b[len_b / 2 - 1];
 	if (len_b == 3)
 		pivote_b = sort_array_b[2];
@@ -119,6 +116,7 @@ void recursive_sort_b(t_list **stack_a, t_list **stack_b, int ref, int status, i
 			push(stack_b, stack_a, 'b');
 			rotate(stack_a, 'a');
 		}
+			
 	  	while((*stack_a)->content  < ref && status == 0)
 	  	{
 			push(stack_a, stack_b, 'a');
@@ -190,7 +188,7 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 				push(stack_b, stack_a, 'b');
 				rotate(stack_a, 'a');
 			}
-				 print_stacks(*stack_a, *stack_b);
+				 //print_stacks(*stack_a, *stack_b);
 			free(sort_array);
 			break ;
 		}
