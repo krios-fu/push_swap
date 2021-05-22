@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:42:43 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/15 16:23:44 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/22 19:10:44 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ void	push(t_list **stack, t_list **stack_dest, char c)
 	del_first_node(stack);
 	if (c == 'a')
 		printf("pb\n");
-	else
+	else if (c == 'b')
 		printf("pa\n");
 }
