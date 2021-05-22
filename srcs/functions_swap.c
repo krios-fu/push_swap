@@ -21,8 +21,10 @@ void	ft_swap (int *content_a, int *content_b, char c)
 	*content_b = content;
 	if (c == 'a')
 		printf("sa\n");
-	else
+	else if ( c  == 'b')
 		printf("sb\n");
+	else if(c == 'x')
+		printf("ss\n");
 }
 
 void	swap_stack (t_list *stack, char c)
@@ -35,6 +37,6 @@ void	swap_stack (t_list *stack, char c)
 
 void	swap_ss (t_list *stack_a, t_list *stack_b)
 {
-	ft_swap(&stack_a->content, &stack_a->next->content, 'a');
-	ft_swap(&stack_b->content, &stack_b->next->content, 'b');
+	ft_swap(&stack_a->content, &stack_a->next->content, 'x');
+	ft_swap(&stack_b->content, &stack_b->next->content, ' ');
 }
