@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:21:00 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/19 17:22:12 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/25 20:25:19 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		dup_number(t_list *stack, int number);
 int		fill_stack (t_list	**stack_a, char **str);
 void	del_first_node(t_list **stack);
 int		check_a (t_list *stack, int len);
-int		check_a_equals (t_list *stack, int pivote);
+int		check_stack_n(t_list *stack, int start, int finish);
 void	push(t_list **stack, t_list **stack_dest, char c);
 void	ft_swap (int *content_a, int *content_b, char c);
 void	swap_stack (t_list *stack, char c);

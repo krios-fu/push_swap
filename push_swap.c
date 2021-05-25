@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 15:33:09 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/22 21:22:32 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/25 22:33:44 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,52 +51,6 @@ int get_ref_final(t_list *stack_a, int ref_mod)
 		stack_a = stack_a->next;
 	}
 	return (ref_mod);
-}
-int return_num_push(t_list **stack_a, int ref)
-{
-	t_list	**stack_aux;
-	int 	*sort_array_b;
-	int		pivote_b;
-	int 	len_b;
-	int 	number_push;
-
-	print_stacks(*stack_a, *stack_aux);
-	while ((*stack_a)->content < ref)
-	{
-		print_stacks(*stack_a, *stack_aux);
-		push(stack_a, stack_aux, 'x');
-	}
-	print_stacks(*stack_a, *stack_aux);
-		number_push = 0;
-		sort_array_b = fill_array_int(*stack_aux);
-		ft_sort_array(sort_array_b, ft_lstsize(*stack_aux));
-		len_b = ft_lstsize(*stack_aux);
-		pivote_b = sort_array_b[len_b / 2 - 1];
-		if (len_b == 3)
-			pivote_b = sort_array_b[2];
-		while (ft_lstsize(*stack_aux) > (len_b / 2) && ft_lstsize(*stack_aux) > 2)
-		{	
-			if (((len_b % 2 != 0) && (*stack_aux)->content == sort_array_b[len_b / 2 + 1])|| (len_b == 3  && (*stack_aux)->content == pivote_b))
-				{
-					push(stack_aux, stack_a, 'x');
-					number_push++;
-				}
-			else if((*stack_aux)->content > pivote_b)
-				{
-					push(stack_aux, stack_a, 'x');
-					number_push++;
-				}
-				else
-				{
-					while (stack_aux)
-					{
-						push(stack_aux, stack_a, 'x');
-					}
-					return(number_push);	
-				}
-		}
-	return(number_push);
-
 }
 void recursive_sort_b(t_list **stack_a, t_list **stack_b, int ref, int status, int *ref_mod)
 {
@@ -179,7 +133,117 @@ void recursive_sort_b(t_list **stack_a, t_list **stack_b, int ref, int status, i
 	 }
 }
 
+
 int	push_swap(t_list **stack_a, t_list **stack_b)
+{
+
+	int		len;
+	int		*sort_array_a;
+	int 	*sort_array_b;
+	int 	pivote_a;
+	int 	pivote_b;
+	int 	start_b = 0;
+	int 	finish_a = 0;
+	int i;
+	int j;
+	i = 0;
+	j = 0;
+
+	len  = ft_lstsize(*stack_a);
+
+	 sort_array_a = fill_array_int(*stack_a);
+	ft_sort_array(sort_array_a, ft_lstsize(*stack_a));
+	// if (len % 2 == 0)
+		// pivote_a = sort_array_a[len / 2 ];
+	// else 
+		// pivote_a = sort_array_a[(len / 2) + 1];
+	// if(!check_a(*stack_a, len))
+	// {
+		// while (ft_lstsize(*stack_a) > (len / 2))
+		// {
+			// if(pivote_a > (*stack_a)->content)
+				// push(stack_a, stack_b,'a');
+			// else
+				// rotate(stack_a, 'a');
+		// }
+		// // print_stacks(*stack_a, *stack_b);
+		
+		// sort_array_a = fill_array_int(*stack_a);
+		// ft_sort_array(sort_array_a, ft_lstsize(*stack_a));
+		// sort_array_b = fill_array_int(*stack_b);
+		// ft_sort_array(sort_array_b, ft_lstsize(*stack_b));
+	
+	
+
+			// printf ("pivote_a: [[[[%d]]]] pivote_b: [[[[%d]]]]\n", pivote_a, pivote_b);
+
+			finish_a = (*stack_a)->next->content;
+			while (!check_a(*stack_a, len))
+			{
+				// printf("1 status [[%d]] finish [[[%d]]] i [[[%d]]]\n", check_stack_n(*stack_b, (*stack_b)->content, finish_b), finish_b, i);
+				// print_stacks(*stack_a, *stack_b);
+				while(check_stack_n(*stack_a, (*stack_a)->content, finish_a) && !check_a(*stack_a, ft_lstsize(*stack_a) ))
+						reverse_rotate(stack_a, 'a');
+				if((*stack_a)->content > (*stack_a)->next->content)
+				{
+						swap_stack(*stack_a, 'a');	
+				}
+				// print_stacks(*stack_a, *stack_a);
+				// printf("status [[%d]] finish [[[%d]]]\n", check_stack_n(*stack_a, (*stack_a)->content, finish_a), finish_b);
+				if(!check_stack_n(*stack_a, (*stack_a)->content, finish_a))
+				{
+					while(!check_stack_n(*stack_a, (*stack_a)->next->content, finish_a) && (*stack_a)->next->content != finish_a)
+					{
+						rotate(stack_a, 'a');
+						if((*stack_a)->content > (*stack_a)->next->content)
+						{
+							swap_stack(*stack_a, 'a');
+							if((*stack_a)->content == finish_a)
+							 	finish_a = (*stack_a)->next->content;	
+						}
+						// print_stacks(*stack_a, *stack_b);
+					}
+					// print_stacks(*stack_a, *stack_b);
+					// finish_b = (*stack_b)->next->content;
+				}
+				if (*stack_b)
+					push(stack_b, stack_a, 'b');
+				i++;
+		 	}
+			 
+	// }
+	return (check_a(*stack_a, len));
+}
+
+
+int main (int argc, char * argv[])
+{
+	t_list	*stack_a;
+	t_list	*stack_b;
+	if (fill_stack(&stack_a, argv))
+	{
+		print_error();
+		return(1);
+	}
+	
+	push_swap(&stack_a, &stack_b);
+		// print_stacks(stack_a, stack_b);
+	//printf("%d", get_min_pos_hold_first(stack_a));
+	//push_swap_case(&stack_a, &stack_b);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+/*  int	push_swap(t_list **stack_a, t_list **stack_b)
 {
 	int		len;
 	int		*sort_array;
@@ -219,21 +283,5 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 		free(sort_array);
 		}
 	return (check_a(*stack_a, len));
-}
+}  */
 
-int main (int argc, char * argv[])
-{
-	t_list	*stack_a;
-	t_list	*stack_b;
-	if (fill_stack(&stack_a, argv))
-	{
-		print_error();
-		return(1);
-	}
-	
-	push_swap(&stack_a, &stack_b);
-		print_stacks(stack_a, stack_b);
-	//printf("%d", get_min_pos_hold_first(stack_a));
-	//push_swap_case(&stack_a, &stack_b);
-
-}

@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:45:34 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/15 16:26:03 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/23 16:03:21 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,15 @@ void	rotate (t_list **stack, char c)
 	del_first_node(stack);
 	if (c == 'a')
 		printf("ra\n");
-	else
+	else if (c == 'b')
 		printf("rb\n");
 }
 
 void	rotate_rr (t_list **stack_a, t_list **stack_b)
 {
-	rotate(stack_a, 'a');
-	rotate(stack_b, 'b');
+	rotate(stack_a, 'r');
+	rotate(stack_b, 'r');
+	printf("rr\n");
 }
 
 void	reverse_rotate (t_list **stack, char c)
@@ -44,12 +45,13 @@ void	reverse_rotate (t_list **stack, char c)
 	aux->next = NULL;
 	if (c == 'a')
 		printf("rra\n");
-	else
+	else if (c == 'b')
 		printf("rrb\n");
 }
 
 void	reverse_rotate_rr(t_list **stack_a, t_list **stack_b)
 {
-	reverse_rotate(stack_a, 'a');
-	reverse_rotate(stack_b, 'b');
+	reverse_rotate(stack_a, 'r');
+	reverse_rotate(stack_b, 'r');
+		printf("rrr\n");
 }
