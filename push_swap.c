@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 15:33:09 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/26 18:01:11 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/27 22:05:06 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,46 +105,78 @@ void recursive_sort_b(t_list **stack_a, t_list **stack_b)
 		// {
 			// push(stack_b, stack_a, 'b');
 			// i++;
-		// }
-		// sort_stack_block(stack_a, ft_lstsize(*stack_a));
-		// printf("fuera del ciclo");
-		// if(ft_lstsize(*stack_b) >= 5)
-			// recursive_sort_b(stack_a, stack_a);
+		// }                       
+
 }
-
-
 int	push_swap(t_list **stack_a, t_list **stack_b)
 {
 
 	int		len;
-	int		*sort_array_a;
-	int 	*sort_array_b;
+	int		*sort_array;
 	int 	pivote_a;
-	int 	pivote_b;
-	int 	start_b = 0;
-	int 	finish_a = 0;
+	int 	ref;
+	int		min_mod;
+	int		*sort_array_b;
+	int		len_b;
 	int i;
-	int j;
-	i = 0;
-	j = 0;
+
+	i = 63;
 
 	len  = ft_lstsize(*stack_a);
-
-	 sort_array_a = fill_array_int(*stack_a);
-	ft_sort_array(sort_array_a, ft_lstsize(*stack_a));
+	sort_array = fill_array_int(*stack_a);
+	ft_sort_array(sort_array, ft_lstsize(*stack_a));
 	// if (len % 2 == 0)
-		// pivote_a = sort_array_a[len / 2 ];
+		// pivote_a = sort_array[len / 2 ];
 	// else 
-		// pivote_a = sort_array_a[(len / 2) + 1];
+		// pivote_a = sort_array[(len / 2) + 1];
+	// ref = pivote_a;
+
+	pivote_a = sort_array[i];
 	if(!check_a(*stack_a, len))
 	{
-		// while (ft_lstsize(*stack_a) > (len / 2))
-		// {
-				// push(stack_a, stack_b,'a');
-		// }
+		while (i < 500)
+		{	
+			while (ft_lstsize(*stack_b) < i)
+			{
+				// printf("[[%d]], i [[[%d]]]", ft_lstsize(*stack_b), i);
+				if(pivote_a > (*stack_a)->content)
+				{
+					push(stack_a, stack_b,'a');
+					sort_array_b = fill_array_int(*stack_b);
+					ft_sort_array(sort_array_b, ft_lstsize(*stack_b));
+					len_b = ft_lstsize(*stack_b);
+			
+					 if(ft_lstsize(*stack_b) >= 2 && (*stack_b)->content < sort_array_b[len_b / 2] && ft_lstsize(*stack_a) >= 2 && (*stack_a)->content > pivote_a)
+					 {
+						rotate_rr(stack_a, stack_b);
+					 }
+					free(sort_array_b);
+				}
+				else
+				{
+					sort_array_b = fill_array_int(*stack_b);
+					ft_sort_array(sort_array_b, ft_lstsize(*stack_b));
+					len_b = ft_lstsize(*stack_b);		
+					 if(ft_lstsize(*stack_b) >= 2 && (*stack_b)->content < sort_array_b[len_b / 2])
+					 {
+						rotate_rr(stack_a, stack_b);
+					 }
+					else
+						rotate(stack_a, 'a');
+					free(sort_array_b);
+				}
+			}
+			if (i >= 441)
+				i += 29;
+			else
+				i += 63;
+			pivote_a = sort_array[i];
+		}
+		 printf("[[[%d]]", ft_lstsize(*stack_b));
+		// print_stacks(*stack_a, *stack_b);
+		
+		push_stack_a(stack_a, stack_b);
 
-		sort_stack_block(stack_a,ft_lstsize(*stack_a));
-		// sort_stack_block(stack_b, ft_lstsize(*stack_b));
 	}
 	return (check_a(*stack_a, len));
 }
@@ -161,7 +193,7 @@ int main (int argc, char * argv[])
 	}
 	
 	push_swap(&stack_a, &stack_b);
-		 print_stacks(stack_a, stack_b);
+	print_stacks(stack_a, stack_b);
 	//printf("%d", get_min_pos_hold_first(stack_a));
 	//push_swap_case(&stack_a, &stack_b);
 
