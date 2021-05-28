@@ -120,26 +120,21 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 	int		len_b;
 	int i;
 
-	i = 63;
+	i = 20; // 100 20 500 50
 
 	len  = ft_lstsize(*stack_a);
 	sort_array = fill_array_int(*stack_a);
 	ft_sort_array(sort_array, ft_lstsize(*stack_a));
-	// if (len % 2 == 0)
-		// pivote_a = sort_array[len / 2 ];
-	// else 
-		// pivote_a = sort_array[(len / 2) + 1];
-	// ref = pivote_a;
 
 	pivote_a = sort_array[i];
 	if(!check_a(*stack_a, len))
 	{
-		while (i < 500)
+		while (i <= 100)
 		{	
 			while (ft_lstsize(*stack_b) < i)
 			{
 				// printf("[[%d]], i [[[%d]]]", ft_lstsize(*stack_b), i);
-				if(pivote_a > (*stack_a)->content)
+				if(pivote_a > (*stack_a)->content || i == 100)
 				{
 					push(stack_a, stack_b,'a');
 					sort_array_b = fill_array_int(*stack_b);
@@ -166,14 +161,10 @@ int	push_swap(t_list **stack_a, t_list **stack_b)
 					free(sort_array_b);
 				}
 			}
-			if (i >= 441)
-				i += 29;
-			else
-				i += 63;
-			pivote_a = sort_array[i];
+			i += 20;
+			if (i != 100)
+				pivote_a = sort_array[i];
 		}
-		 printf("[[[%d]]", ft_lstsize(*stack_b));
-		// print_stacks(*stack_a, *stack_b);
 		
 		push_stack_a(stack_a, stack_b);
 

@@ -169,21 +169,32 @@ void push_stack_a(t_list **stack_a, t_list **stack_b)
 	int iter;
 	int hold;
 	int len_stack;
+	int *sort_array_b;
+	int len_b;
 
 	iter = 0;
 	len_stack = 0;
 	hold = 0;
+
+	sort_array_b = fill_array_int(*stack_b);
+	ft_sort_array(sort_array_b, ft_lstsize(*stack_b));
+	len_b = ft_lstsize(*stack_b);
 
 	while(*stack_b)
 	{
 		hold = get_max_content(*stack_b);
 		len_stack = ft_lstsize(*stack_b);
 		iter = get_iterative(hold, len_stack);
+
 		while(iter > 0)
 		{
 			if(len_stack > 1)
 			{
-				if (hold > (len_stack / 2))
+				if(len_b > 2 && (*stack_b)->content == sort_array_b[len_b - 2])
+				{
+					push(stack_b, stack_a, 'b');
+				}
+				else if (hold > (len_stack / 2))
 					reverse_rotate(stack_b, 'b');
 				else
 					rotate(stack_b, 'b');
@@ -191,5 +202,11 @@ void push_stack_a(t_list **stack_a, t_list **stack_b)
 			iter--;
 		}
 		push(stack_b, stack_a, 'b');
+		free(sort_array_b);
+		sort_array_b = fill_array_int(*stack_b);
+		ft_sort_array(sort_array_b, ft_lstsize(*stack_b));
+		len_b = ft_lstsize(*stack_b);
+		if(ft_lstsize(*stack_a) > 2 && (*stack_a)->content > (*stack_a)->next->content)
+			swap_stack(*stack_a, 'a');
 	}
 }
