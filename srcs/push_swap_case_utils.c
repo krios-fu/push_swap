@@ -6,33 +6,11 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 17:33:25 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/17 17:59:58 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/28 19:40:32 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
-
-int	get_min_pos_hold_first(t_list *stack_a)
-{
-	int	len;
-	int	min;
-	int	pos;
-
-	len = 0;
-	min = stack_a->content;
-	pos = 1;
-	while (stack_a)
-	{
-		if (stack_a->content < min)
-		{
-			min = stack_a->content;
-			pos = len + 1;
-		}
-		stack_a = stack_a->next;
-		len++;
-	}
-	return (pos);
-}
 
 int	get_next_min(t_list *stack_a, int ref)
 {
@@ -63,34 +41,6 @@ int	get_next_min(t_list *stack_a, int ref)
 	return (pos);
 }
 
-int	get_min_pos_hold_second(t_list *stack_a, int pos_hold_first)
-{
-	int	len;
-	int	min;
-	int	pos;
-
-	len = 0;
-	pos = 0;
-	min = stack_a->content;
-	if (pos_hold_first == 1)
-	{
-		min = stack_a->next->content;
-		stack_a = stack_a->next;
-		len = 1;
-	}
-	while (stack_a)
-	{
-		if (len != pos_hold_first - 1 && stack_a->content <= min)
-		{
-			min = stack_a->content;
-			pos = len + 1;
-		}
-		stack_a = stack_a->next;
-		len++;
-	}
-	return (pos);
-}
-
 int	get_iterative(int hold, int len_stack)
 {
 	if (hold <= (len_stack / 2))
@@ -98,49 +48,6 @@ int	get_iterative(int hold, int len_stack)
 	else
 		return (len_stack - hold + 1);
 }
-
-void	move_hold(t_list **stack_a, int chuck)
-{
-	int	len_stack;
-	int	iter;
-
-	iter = get_iterative(chuck, len_stack);
-	while (iter > 0)
-	{
-		if (chuck > (len_stack / 2))
-			reverse_rotate(stack_a, 'a');
-		else
-			rotate(stack_a, 'a');
-		iter--;
-	}
-}
-
-/*void	move_hold_second(t_list **stack_a, t_list **stack_b, int start)
-{
-	int	len_stack;
-	int	hold_first;
-	int	hold_second;
-	int	iter;
-
-	len_stack = ft_lstsize(*stack_a);
-	hold_first = get_next_min(*stack_a, start);
-	hold_second = get_next_min(*stack_a, get_content(*stack_a, hold_first));
-	if (get_iterative(hold_second, len_stack)
-		< get_iterative(hold_first, len_stack))
-	{
-		iter = get_iterative(hold_second, len_stack);
-		while (iter > 0)
-		{
-			if (hold_second > (len_stack / 2))
-				reverse_rotate(stack_a, 'a');
-			else
-				rotate(stack_a, 'a');
-			iter--;
-		}
-	}
-	else
-		move_hold_first(stack_a, stack_b, start);
-}*/
 
 int	get_max_content(t_list *stack)
 {
@@ -171,14 +78,13 @@ void push_stack_a(t_list **stack_a, t_list **stack_b)
 	int len_stack;
 	int *sort_array_b;
 	int len_b;
+	int flag;
 
+	flag = 0;
 	iter = 0;
 	len_stack = 0;
 	hold = 0;
 
-	sort_array_b = fill_array_int(*stack_b);
-	ft_sort_array(sort_array_b, ft_lstsize(*stack_b));
-	len_b = ft_lstsize(*stack_b);
 
 	while(*stack_b)
 	{
@@ -186,27 +92,37 @@ void push_stack_a(t_list **stack_a, t_list **stack_b)
 		len_stack = ft_lstsize(*stack_b);
 		iter = get_iterative(hold, len_stack);
 
+		sort_array_b = fill_array_int(*stack_b);
+		ft_sort_array(sort_array_b, ft_lstsize(*stack_b));
+		len_b = ft_lstsize(*stack_b);
+
 		while(iter > 0)
 		{
 			if(len_stack > 1)
 			{
-				if(len_b > 2 && (*stack_b)->content == sort_array_b[len_b - 2])
+				if(len_b >= 2 && (*stack_b)->content == sort_array_b[len_b - 2 ] && flag == 0)
 				{
 					push(stack_b, stack_a, 'b');
+					iter = 0;
+					flag = 1;
 				}
-				else if (hold > (len_stack / 2))
+				else if (hold > (len_stack / 2))	
 					reverse_rotate(stack_b, 'b');
 				else
 					rotate(stack_b, 'b');
 			}
 			iter--;
 		}
-		push(stack_b, stack_a, 'b');
+		if(iter == 0)
+		{
+			push(stack_b, stack_a, 'b');
+			flag = 0;
+		}
 		free(sort_array_b);
-		sort_array_b = fill_array_int(*stack_b);
-		ft_sort_array(sort_array_b, ft_lstsize(*stack_b));
-		len_b = ft_lstsize(*stack_b);
-		if(ft_lstsize(*stack_a) > 2 && (*stack_a)->content > (*stack_a)->next->content)
-			swap_stack(*stack_a, 'a');
+		 if(ft_lstsize(*stack_a) >= 2 && (*stack_a)->content > (*stack_a)->next->content && len_b > 2 && (*stack_b)->content < (*stack_b)->next->content)
+			  swap_ss(*stack_a, *stack_b);
+		if (ft_lstsize(*stack_a) >= 2 && (*stack_a)->content > (*stack_a)->next->content)
+				 swap_stack(*stack_a, 'a');
+
 	}
 }
