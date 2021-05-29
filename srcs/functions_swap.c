@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:41:18 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/15 21:34:46 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/29 21:31:42 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	ft_swap (int *content_a, int *content_b, char c)
 	*content_b = content;
 	if (c == 'a')
 		printf("sa\n");
-	else if ( c  == 'b')
+	else if (c == 'b')
 		printf("sb\n");
-	else if(c == 'x')
+	else if (c == 'x')
 		printf("ss\n");
 }
 

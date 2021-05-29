@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atoi_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/15 17:33:47 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/29 15:51:34 by krios-fu         ###   ########.fr       */
+/*   Created: 2021/05/29 15:47:48 by krios-fu          #+#    #+#             */
+/*   Updated: 2021/05/29 21:29:03 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../push_swap.h"
 
-char	*ft_isspace(char *str)
+static char	*ft_isspace(char *str)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ char	*ft_isspace(char *str)
 	return (&str[i]);
 }
 
-int	ft_cmp_p_n(char *str)
+static int	ft_cmp_p_n(char *str)
 {
 	int	i;
 	int	flag;
@@ -40,7 +40,7 @@ int	ft_cmp_p_n(char *str)
 	return (-1);
 }
 
-char	*ft_position(char *str)
+static char	*ft_position(char *str)
 {
 	int	i;
 
@@ -50,7 +50,18 @@ char	*ft_position(char *str)
 	return (&str[i]);
 }
 
-int	ft_atoi(const char *str)
+static void	is_int(long num)
+{
+	int	ref;
+
+	ref = num;
+	if (num < 0)
+		ref = (-num - 1);
+	if (((ref >> 31) & 1 ) == 1)
+		print_error();
+}
+
+int	ft_atoi_check(const char *str)
 {
 	char		*ptr;
 	int			i;
@@ -75,5 +86,6 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	plus *= ft_cmp_p_n(ft_isspace((char *)str));
+	is_int(plus);
 	return (plus);
 }

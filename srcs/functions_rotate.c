@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:45:34 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/23 16:03:21 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/29 21:47:20 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	rotate_rr (t_list **stack_a, t_list **stack_b)
 void	reverse_rotate (t_list **stack, char c)
 {
 	t_list	*aux;
-	void	*cont;
 
 	aux = *stack;
 	while (aux->next->next != NULL)
@@ -53,5 +52,5 @@ void	reverse_rotate_rr(t_list **stack_a, t_list **stack_b)
 {
 	reverse_rotate(stack_a, 'r');
 	reverse_rotate(stack_b, 'r');
-		printf("rrr\n");
+	printf("rrr\n");
 }

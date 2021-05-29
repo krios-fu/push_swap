@@ -6,13 +6,13 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 16:06:17 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/28 19:43:27 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/29 22:02:56 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-int len_block (int len)
+int	len_block (int len)
 {
 	if (len >= 100 && len < 500)
 		return (20);
@@ -22,48 +22,47 @@ int len_block (int len)
 		return (5);
 	else if (len == 4)
 		return (2);
-	return(0);
+	return (0);
 }
 
-void push_min(t_list **stack_a, t_list **stack_b, int pivote_a)
+void	push_min(t_list **stack_a, t_list **stack_b, int pivote_a)
 {
 	int	*sort_array_b;
-	int len_b;
-	push(stack_a, stack_b,'a');
+	int	len_b;
+
+	push(stack_a, stack_b, 'a');
 	sort_array_b = fill_array_int(*stack_b);
 	ft_sort_array(sort_array_b, ft_lstsize(*stack_b));
 	len_b = ft_lstsize(*stack_b);
-	if(ft_lstsize(*stack_b) >= 2 && (*stack_b)->content < sort_array_b[len_b / 2] && ft_lstsize(*stack_a) >= 2 && (*stack_a)->content > pivote_a)
-	{
+	if (ft_lstsize(*stack_b) >= 2 && (*stack_b)->content
+		< sort_array_b[len_b / 2] && ft_lstsize(*stack_a) >= 2
+		&& (*stack_a)->content > pivote_a)
 		rotate_rr(stack_a, stack_b);
-	}
 	free(sort_array_b);
 }
 
-void rotate_max(t_list **stack_a, t_list **stack_b)
+void	rotate_max(t_list **stack_a, t_list **stack_b)
 {
 	int	*sort_array_b;
-	int len_b;
-	
+	int	len_b;
+
 	sort_array_b = fill_array_int(*stack_b);
 	ft_sort_array(sort_array_b, ft_lstsize(*stack_b));
-	len_b = ft_lstsize(*stack_b);		
-	if(ft_lstsize(*stack_b) >= 2 && (*stack_b)->content < sort_array_b[len_b / 2])
-	{
+	len_b = ft_lstsize(*stack_b);
+	if (ft_lstsize(*stack_b) >= 2 && (*stack_b)->content
+		< sort_array_b[len_b / 2])
 		rotate_rr(stack_a, stack_b);
-	}
 	else
 		rotate(stack_a, 'a');
 	free(sort_array_b);
 }
 
-void push_swap_case_hundred (t_list **stack_a, t_list **stack_b, int len)
+void	push_swap_case_hundred (t_list **stack_a, t_list **stack_b, int len)
 {
 	int	*sort_array;
 	int	i;
 	int	block_inc;
 	int	pivote_a;
-	int	len_b;
 
 	sort_array = fill_array_int(*stack_a);
 	ft_sort_array(sort_array, ft_lstsize(*stack_a));
@@ -71,10 +70,10 @@ void push_swap_case_hundred (t_list **stack_a, t_list **stack_b, int len)
 	i = block_inc;
 	pivote_a = sort_array[i];
 	while (ft_lstsize(*stack_a) > 0)
-	{	
+	{
 		while (ft_lstsize(*stack_b) < i)
 		{
-			if(pivote_a > (*stack_a)->content || i == len)
+			if (pivote_a > (*stack_a)->content || i == len)
 				push_min(stack_a, stack_b, pivote_a);
 			else
 				rotate_max(stack_a, stack_b);

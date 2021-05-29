@@ -6,40 +6,11 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 17:33:25 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/28 19:40:32 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/29 22:45:53 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
-
-int	get_next_min(t_list *stack_a, int ref)
-{
-	int	len;
-	int	min;
-	int	pos;
-
-	len = 1;
-	min = 0;
-	pos = 0;
-	while (stack_a)
-	{  
-		if (stack_a->content > ref)
-		{
-			if (min == 0)
-			{
-				min = stack_a->content;;
-			}
-			if (min >= stack_a->content)
-			{
-				min = stack_a->content;
-				pos = len;
-			}
-		}
-		stack_a = stack_a->next;
-		len++;
-	}
-	return (pos);
-}
 
 int	get_iterative(int hold, int len_stack)
 {
@@ -71,7 +42,7 @@ int	get_max_content(t_list *stack)
 	return (pos);
 }
 
-void push_stack_a(t_list **stack_a, t_list **stack_b)
+void	push_stack_a(t_list **stack_a, t_list **stack_b)
 {
 	int iter;
 	int hold;
@@ -84,18 +55,14 @@ void push_stack_a(t_list **stack_a, t_list **stack_b)
 	iter = 0;
 	len_stack = 0;
 	hold = 0;
-
-
 	while(*stack_b)
 	{
 		hold = get_max_content(*stack_b);
 		len_stack = ft_lstsize(*stack_b);
 		iter = get_iterative(hold, len_stack);
-
 		sort_array_b = fill_array_int(*stack_b);
 		ft_sort_array(sort_array_b, ft_lstsize(*stack_b));
 		len_b = ft_lstsize(*stack_b);
-
 		while(iter > 0)
 		{
 			if(len_stack > 1)
@@ -123,6 +90,5 @@ void push_stack_a(t_list **stack_a, t_list **stack_b)
 			  swap_ss(*stack_a, *stack_b);
 		if (ft_lstsize(*stack_a) >= 2 && (*stack_a)->content > (*stack_a)->next->content)
 				 swap_stack(*stack_a, 'a');
-
 	}
 }

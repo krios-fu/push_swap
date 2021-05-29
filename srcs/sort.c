@@ -6,17 +6,17 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 14:54:27 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/17 16:27:51 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/29 22:10:25 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-int *fill_array_int(t_list *stack)
+int	*fill_array_int(t_list *stack)
 {
-	int *array;
-	int len_stack;
-	int i;
+	int	*array;
+	int	len_stack;
+	int	i;
 
 	len_stack = ft_lstsize(stack);
 	i = 0;
@@ -29,15 +29,15 @@ int *fill_array_int(t_list *stack)
 		stack = stack->next;
 		i++;
 	}
-	return(array);
+	return (array);
 }
 
-void ft_sort_array(int *tab, int size)
+void	ft_sort_array(int *tab, int size)
 {
-	int i;
-	int pos;
-	int cut;
-	int min;
+	int	i;
+	int	pos;
+	int	cut;
+	int	min;
 
 	pos = 0;
 	i = 0;

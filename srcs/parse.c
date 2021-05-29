@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:31:07 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/28 22:14:51 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/29 21:48:41 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,60 +27,53 @@ int	fill_stack (t_list	**stack_a, char **str)
 {
 	int	i;
 	int	content;
-	int	*num;
 
-	i = 1;
-	if (!str[i])
+	i = 0;
+	if (!str[0] || (ft_strlen(&str[0][0]) >= 11 && str[0][0] != '-'))
 		return (1);
-	content = ft_atoi(&str[i][0]);
-	*stack_a = ft_lstnew(content);
-	while (str[++i] != '\0')
+	content = ft_atoi_check(&str[0][0]);
+	while (str[i])
 	{
-		content = ft_atoi(&str[i][0]);
+		content = ft_atoi_check(&str[i][0]);
 		if (dup_number(*stack_a, content))
 		{
 			while (*stack_a)
 				del_first_node(stack_a);
-			print_error();
+			 print_error();
+			printf ("error");
 		}
 		else
 			ft_lstadd_back(stack_a, ft_lstnew(content));
+		i++;
 	}
 	return (0);
 }
 
-int check_number_argv(char *argv [])
+char	**check_number_argv(char *argv)
 {
-	char **split_arg;
-	int i;
-	int j;
-	int flag;
+	char	**num;
+	int		i;
+	int		j;
+	int		flag;
 
 	i = 0;
 	j = 0;
-	flag = 0;
-	split_arg = ft_split(argv[1], ' ');
-	while (split_arg[i])
+	num = ft_split(argv, ' ');
+	while (num[++i])
 	{
-		while(split_arg[i][j])
+		flag = 0;
+		while (num[i][++j])
 		{
-			if ( ft_isdigit(split_arg[i][j]) || split_arg[i][j] == '-' || split_arg[i][j] == '+')
-				{
-					if(ft_isdigit(split_arg[i][j]))
-						flag = 1;
-					if ((flag == 1 && (split_arg[i][j] == '-' || split_arg[i][j] == '+')))
-						print_error();
-				}
-				else
-						print_error();
-			j++;
+			if (ft_isdigit(num[i][j]) || num[i][j] == '-' || num[i][j] == '+')
+			{
+				if (ft_isdigit(num[i][j]))
+					flag = 1;
+				if ((flag == 1 && (num[i][j] == '-' || num[i][j] == '+')))
+					print_error();
+			}
+			else
+				print_error();
 		}
-		i++;
 	}
-	return(1);
-}
-
-int	parse(char *argv[])
-{
-	return (0);
+	return (num);
 }
