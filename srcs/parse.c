@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:31:07 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/29 21:48:41 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/30 15:57:49 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,31 +49,38 @@ int	fill_stack (t_list	**stack_a, char **str)
 	return (0);
 }
 
+static	int	is_neg_pos(int c)
+{
+	if (c == '-' || c == '+')
+		return (1);
+	return (0);
+}
+
 char	**check_number_argv(char *argv)
 {
-	char	**num;
-	int		i;
-	int		j;
-	int		flag;
+	t_var_split	var;
 
-	i = 0;
-	j = 0;
-	num = ft_split(argv, ' ');
-	while (num[++i])
+	var.i = 0;
+	var.j = 0;
+	var.num = ft_split(argv, ' ');
+	while (var.num[var.i])
 	{
-		flag = 0;
-		while (num[i][++j])
+		var.flag = 0;
+		while (var.num[var.i][var.j])
 		{
-			if (ft_isdigit(num[i][j]) || num[i][j] == '-' || num[i][j] == '+')
+			if (ft_isdigit(var.num[var.i][var.j]) ||
+				is_neg_pos(var.num[var.i][var.j]))
 			{
-				if (ft_isdigit(num[i][j]))
-					flag = 1;
-				if ((flag == 1 && (num[i][j] == '-' || num[i][j] == '+')))
+				if (ft_isdigit(var.num[var.i][var.j]))
+					var.flag = 1;
+				if (var.flag == 1 && is_neg_pos(var.num[var.i][var.j]))
 					print_error();
 			}
 			else
 				print_error();
+			var.j++;
 		}
+		var.i++;
 	}
-	return (num);
+	return (var.num);
 }

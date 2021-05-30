@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 17:33:25 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/29 22:45:53 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/30 17:55:58 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,53 +42,58 @@ int	get_max_content(t_list *stack)
 	return (pos);
 }
 
+void	iter_push(t_list **stack_a, t_list **stack_b, t_var *var, int *s_array)
+{
+	while (var->iter > 0)
+	{
+		if (var->len_stack > 1)
+		{
+			if (var->len_b >= 2 && (*stack_b)->content
+				== s_array[var->len_b - 2 ] && var->flag == 0)
+			{
+				push(stack_b, stack_a, 'b');
+				var->iter = 0;
+				var->flag = 1;
+			}
+			else if (var->hold > (var->len_stack / 2))
+				reverse_rotate(stack_b, 'b');
+			else
+				rotate(stack_b, 'b');
+		}
+		var->iter--;
+	}
+	if (var->iter == 0)
+	{
+		push(stack_b, stack_a, 'b');
+		var->flag = 0;
+	}
+	free(s_array);
+}
+
 void	push_stack_a(t_list **stack_a, t_list **stack_b)
 {
-	int iter;
-	int hold;
-	int len_stack;
-	int *sort_array_b;
-	int len_b;
-	int flag;
+	t_var	var;
+	int		*s_array;
 
-	flag = 0;
-	iter = 0;
-	len_stack = 0;
-	hold = 0;
-	while(*stack_b)
+	var.flag = 0;
+	var.iter = 0;
+	var.len_stack = 0;
+	var.hold = 0;
+	while (*stack_b)
 	{
-		hold = get_max_content(*stack_b);
-		len_stack = ft_lstsize(*stack_b);
-		iter = get_iterative(hold, len_stack);
-		sort_array_b = fill_array_int(*stack_b);
-		ft_sort_array(sort_array_b, ft_lstsize(*stack_b));
-		len_b = ft_lstsize(*stack_b);
-		while(iter > 0)
-		{
-			if(len_stack > 1)
-			{
-				if(len_b >= 2 && (*stack_b)->content == sort_array_b[len_b - 2 ] && flag == 0)
-				{
-					push(stack_b, stack_a, 'b');
-					iter = 0;
-					flag = 1;
-				}
-				else if (hold > (len_stack / 2))	
-					reverse_rotate(stack_b, 'b');
-				else
-					rotate(stack_b, 'b');
-			}
-			iter--;
-		}
-		if(iter == 0)
-		{
-			push(stack_b, stack_a, 'b');
-			flag = 0;
-		}
-		free(sort_array_b);
-		 if(ft_lstsize(*stack_a) >= 2 && (*stack_a)->content > (*stack_a)->next->content && len_b > 2 && (*stack_b)->content < (*stack_b)->next->content)
-			  swap_ss(*stack_a, *stack_b);
-		if (ft_lstsize(*stack_a) >= 2 && (*stack_a)->content > (*stack_a)->next->content)
-				 swap_stack(*stack_a, 'a');
+		var.hold = get_max_content(*stack_b);
+		var.len_stack = ft_lstsize(*stack_b);
+		var.iter = get_iterative(var.hold, var.len_stack);
+		s_array = fill_array_int(*stack_b);
+		ft_sort_array(s_array, ft_lstsize(*stack_b));
+		var.len_b = ft_lstsize(*stack_b);
+		iter_push(stack_a, stack_b, &var, s_array);
+		if (ft_lstsize(*stack_a) >= 2 && (*stack_a)->content
+			> (*stack_a)->next->content && var.len_b > 2
+			&& (*stack_b)->content < (*stack_b)->next->content)
+			swap_ss(*stack_a, *stack_b);
+		if (ft_lstsize(*stack_a) >= 2 && (*stack_a)->content
+			> (*stack_a)->next->content)
+			swap_stack(*stack_a, 'a');
 	}
 }
