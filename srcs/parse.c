@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:31:07 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/30 15:57:49 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/30 19:52:11 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	fill_stack (t_list	**stack_a, char **str)
 	int	content;
 
 	i = 0;
-	if (!str[0] || (ft_strlen(&str[0][0]) >= 11 && str[0][0] != '-'))
+	if (!str[0] || ((ft_strlen(str[0]) >= 11 && str[0][0] != '-'))
+		|| (ft_strlen(str[0]) > 11 && str[0][0] == '-'))
 		return (1);
 	content = ft_atoi_check(&str[0][0]);
 	while (str[i])
