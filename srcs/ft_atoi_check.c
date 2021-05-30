@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/29 15:47:48 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/29 21:29:03 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/05/30 21:36:02 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,11 @@ static char	*ft_isspace(char *str)
 static int	ft_cmp_p_n(char *str)
 {
 	int	i;
-	int	flag;
 
 	i = 0;
-	flag = 0;
 	while (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			flag++;
 		i++;
-	}
-	if (flag % 2 == 0)
+	if (i % 2 == 0)
 		return (1);
 	return (-1);
 }
@@ -52,12 +46,7 @@ static char	*ft_position(char *str)
 
 static void	is_int(long num)
 {
-	int	ref;
-
-	ref = num;
-	if (num < 0)
-		ref = (-num - 1);
-	if (((ref >> 31) & 1 ) == 1)
+	if (num < -2147483648 || num > 2147483647)
 		print_error();
 }
 
