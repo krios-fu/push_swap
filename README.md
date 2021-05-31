@@ -12,7 +12,7 @@ Este proyecto se trata de ordenar datos en una pila, con un conjunto limitado de
 `ARG="4 67 3 87 23"; ./push_swap $ARG | wc -l`
 
 
-**Numero de aproxcimaciones en movimientos:**
+**Número de aproximaciones en movimientos:**
 
 **2n** : 2 Movimientos en el peor de los casos
 
@@ -31,7 +31,7 @@ Divide y vencerás.
 
 Dividir el Stack a tantas veces necesarias hasta que no quede ningún elelmento en ella.
 
-La forma que implenté fue escoger un pivote por cada división en un punto estratégico del array ordenado.
+La forma que implenté fue escoger un pivote en el stack a por cada división, en un punto estratégico del array ordenado.
 
 En el caso de 100 fue en las pociciones 20, 40, 60, 80 y 100. Los menores a cada iteración pasan al stack b y los mayores al fondo de la pila.
 
