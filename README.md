@@ -23,3 +23,22 @@ Este proyecto se trata de ordenar datos en una pila, con un conjunto limitado de
 **100n** : < 700 Movimientos en el peor de los casos
 
 **500n** : < 6500 Movimientos en el peor de los casos
+
+
+**Logica**
+
+Divide y vencerás. 
+
+Dividir el Stack a tantas veces necesarias hasta que no quede ningún elelmento en ella.
+
+La forma que implenté fue escoger un pivote por cada división en un punto estratégico del array ordenado.
+
+En el caso de 100 fue en las pociciones 20, 40, 60, 80 y 100. Los menores a cada iteración pasan al stack b y los mayores al fondo de la pila.
+
+Cuando el stack b es mayor a 2 números de longitud escojo un pivote en el stack b, preferiblemente el del medio para hacer un pre ordenamiento. todos los números menores al pivote pasan al fondo de la pila. El pivote se recalcula tantas veces como números lleguen al stack b.
+
+Cuando el stack a esté vacío, implemento un algoritmo de búsqueda basado en la longitud del stack, teniendo en cuenta que en la parte menor a len/2 quedarán los números mayores y en el otra parate los numero menores al pivote final. haciendo que el número de rotaciones disminuyan. 
+
+El algoritmo de búsqueda es muy sencillo. Básicamente es calcular el nùmero de rotaciones para posicionar el número mayor al top del satck b y hacer un push al stack a. Mejora que implemente en este algoritmo es: si en el transcurso de las rotaciones llega a estar el segundo mayor en el top, envío este número primero al stack a y cuando llegue el número mayor hago un swap a (sa) en el stack a para dejarlo en el orden correspondiente.
+
+Al finalizar hago un check. 
