@@ -25,36 +25,48 @@ int	len_block (int len)
 	return (0);
 }
 
-void	push_min(t_list **stack_a, t_list **stack_b, int pivote_a)
+void	push_min(t_list **stack_a, t_list **stack_b, int pivote_a, int *sort_array_b, int ref)
 {
-	int	*sort_array_b;
-	int	len_b;
+	int	len;
+	int block;
 
+	block = 0;
 	push(stack_a, stack_b, 'a');
-	sort_array_b = fill_array_int(*stack_b);
-	ft_sort_array(sort_array_b, ft_lstsize(*stack_b));
-	len_b = ft_lstsize(*stack_b);
+	len = ft_lstsize(*stack_b);
+	if (len >= 500)
+		block = 25;
+	else if (len >= 100 && len < 500)
+			block = 10;
+	else if (len == 4)
+		block = 2;
+	else if (len > 5)
+			block = 3;
 	if (ft_lstsize(*stack_b) >= 2 && (*stack_b)->content
-		< sort_array_b[len_b / 2] && ft_lstsize(*stack_a) >= 2
+		< sort_array_b[ref - block] && ft_lstsize(*stack_a) >= 2
 		&& (*stack_a)->content > pivote_a)
 		rotate_rr(stack_a, stack_b);
-	free(sort_array_b);
 }
 
-void	rotate_max(t_list **stack_a, t_list **stack_b)
+void	rotate_max(t_list **stack_a, t_list **stack_b, int *sort_array_b, int ref)
 {
-	int	*sort_array_b;
-	int	len_b;
+	int	len;
+	int block;
 
-	sort_array_b = fill_array_int(*stack_b);
-	ft_sort_array(sort_array_b, ft_lstsize(*stack_b));
-	len_b = ft_lstsize(*stack_b);
+	block = 0;
+	len = ft_lstsize(*stack_b);
+	if (len >= 500)
+		block = 25;
+	else if (len >= 100 && len < 500)
+			block = 10;
+	else if (len == 4)
+		block = 2;
+	else if (len > 5)
+			block = 3;
 	if (ft_lstsize(*stack_b) >= 2 && (*stack_b)->content
-		< sort_array_b[len_b / 2])
+		< sort_array_b[ref - block])
 		rotate_rr(stack_a, stack_b);
 	else
 		rotate(stack_a, 'a');
-	free(sort_array_b);
 }
 
 void	push_hundred (t_list **stack_a, t_list **stack_b, int len, int *s_array)
@@ -71,9 +83,9 @@ void	push_hundred (t_list **stack_a, t_list **stack_b, int len, int *s_array)
 		while (ft_lstsize(*stack_b) < i)
 		{
 			if (pivote_a > (*stack_a)->content || i == len)
-				push_min(stack_a, stack_b, pivote_a);
+				push_min(stack_a, stack_b, pivote_a, s_array, i);
 			else
-				rotate_max(stack_a, stack_b);
+				rotate_max(stack_a, stack_b, s_array, i);
 		}
 		i += block_inc;
 		if (i < len)

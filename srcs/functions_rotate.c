@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:45:34 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/29 21:47:20 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/06/02 20:25:02 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	rotate (t_list **stack, char c)
 	del_first_node(stack);
 	if (c == 'a')
 		printf("ra\n");
-	else if (c == 'b')
+	if (c == 'b')
 		printf("rb\n");
 }
 
@@ -44,7 +44,7 @@ void	reverse_rotate (t_list **stack, char c)
 	aux->next = NULL;
 	if (c == 'a')
 		printf("rra\n");
-	else if (c == 'b')
+	if (c == 'b')
 		printf("rrb\n");
 }
 

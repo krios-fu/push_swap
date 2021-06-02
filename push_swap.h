@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:21:00 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/05/30 18:30:05 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/06/02 19:09:36 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PUSH_SWAP_H
 
 # include    "./libft/libft.h"
+# include    "./gnl/get_next_line_bonus.h"
 # include    <stdio.h>
 # include    <stdlib.h>
 
