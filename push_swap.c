@@ -55,14 +55,13 @@ int	main(int argc, char *argv[])
 		j = 0;
 		split_argument = check_number_argv(argv[i]);
 		if (fill_stack(&stack_a, split_argument))
-		{
 			print_error();
-			return (1);
-		}
 		while (split_argument[j])
 			free(split_argument[j++]);
+		free(split_argument);
 		i++;
 	}
 	if (argc > 1)
 		push_swap(&stack_a, &stack_b);
+	return (0);
 }

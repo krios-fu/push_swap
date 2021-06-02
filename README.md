@@ -20,9 +20,9 @@ Este proyecto se trata de ordenar datos en una pila, con un conjunto limitado de
 
 **5n** : > 7 && < 12 Movimientos en el peor de los casos
 
-**100n** : < 700 Movimientos en el peor de los casos
+**100n** : > 500 && < 650 Movimientos en el peor de los casos
 
-**500n** : < 6500 Movimientos en el peor de los casos
+**500n** : > 5100 && < 5500 Movimientos en el peor de los casos
 
 
 **Logica**
