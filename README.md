@@ -1,7 +1,7 @@
 # push_swap
 Este proyecto se trata de ordenar datos en una pila, con un conjunto limitado de instrucciones, utilizando el menor número posible de acciones.
 
-**Nota final:  96%** 
+**Nota final:  125%** 
 
 **Hacer:** 
 
