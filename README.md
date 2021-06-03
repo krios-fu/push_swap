@@ -35,7 +35,7 @@ La forma que implenté fue escoger un pivote en el stack a por cada división, e
 
 En el caso de 100 fue en las pociciones 20, 40, 60, 80 y 100. Los menores a cada iteración pasan al stack b y los mayores al fondo de la pila.
 
-Cuando el stack b es mayor a 2 números de longitud escojo un pivote en el stack b, preferiblemente el del medio para hacer un pre ordenamiento. todos los números menores al pivote pasan al fondo de la pila. El pivote se recalcula tantas veces como números lleguen al stack b.
+Cuando el stack b es mayor a 2 de longitud escojo un pivote en el stack b, preferiblemente el del bloque_n[LEN/2] por ejemplo: si los numeros a pasar al stack b son el blocke_n = "3 4 5 1 2" mi pivote en el sentido ordenado sería el numero 3. 1 2 [[3]] 4 5. Esto con el fin de hacer un pre ordenamiento tipo sandwich dejando cada nuevo bloque al centro del stack. Todos los números menores al pivote pasan al fondo de la pila. El pivote se recalcula por cada bloque nuevo que llega al stack b.
 
 Cuando el stack a esté vacío, implemento un algoritmo de búsqueda basado en la longitud del stack, teniendo en cuenta que en la parte menor a len/2 quedarán los números mayores y en el otra parate los numero menores al pivote final. haciendo que el número de rotaciones disminuyan. 
 
