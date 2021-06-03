@@ -5,7 +5,7 @@ Este proyecto se trata de ordenar datos en una pila, con un conjunto limitado de
 
 **Hacer:** 
 
-`make && make run`
+`make && make run && make bonus`
 
 `./push_swap 1 3 2 `
 
