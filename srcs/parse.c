@@ -36,10 +36,10 @@ int	fill_stack (t_list	**stack_a, char **str)
 	int	content;
 
 	i = 0;
-	if (is_neg_pos(str[i][0]) && is_neg_pos(str[i][1]))
-		return (1);
 	while (str[i])
 	{
+		if (is_neg_pos(str[i][0]) && is_neg_pos(str[i][1]))
+			return (1);
 		if (is_neg_pos(str[i][ft_strlen(str[i]) - 1]))
 			print_error();
 		content = ft_atoi_check(&str[i][0]);
