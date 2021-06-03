@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 13:12:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2020/12/28 15:01:10 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/06/03 15:41:12 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ char	*ft_strdup(const char *s1)
 	size_t		i;
 
 	i = ft_strlen(s1);
-	if (!(s2 = malloc(i + 1)))
+	s2 = malloc(i + 1);
+	if (!s2)
 		return (NULL);
 	ft_memcpy(s2, s1, i);
 	s2[i] = '\0';
@@ -49,7 +50,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (start > ft_strlen(s))
 		return (ft_strdup(""));
-	if (!(x = (char *)malloc(sizeof(char) * len + 1)))
+	x = (char *)malloc(sizeof(char) * len + 1);
+	if (!x)
 		return (NULL);
 	while (i < len)
 	{
@@ -72,7 +74,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	c1 = 0;
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	if (!(x = (char *)malloc(sizeof(char) * ft_strlen(s1) + ft_strlen(s2) + 1)))
+	x = (char *)malloc(sizeof(char) * ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!x)
 		return (NULL);
 	while (c1 != c2)
 	{

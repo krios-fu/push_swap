@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 13:56:42 by krios-fu          #+#    #+#             */
-/*   Updated: 2020/12/28 15:00:26 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/06/03 15:50:27 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-int		ft_negative(char **x, char **line)
+int	ft_negative(char **x, char **line)
 {
 	if (ft_strchr(*x, '\0'))
 	{
@@ -37,7 +37,7 @@ int		ft_negative(char **x, char **line)
 	return (0);
 }
 
-int		ft_nbytesnegativo(ssize_t *nbytes, char **x)
+int	ft_nbytesnegativo(ssize_t *nbytes, char **x)
 {
 	if (*nbytes < 0)
 	{
@@ -51,7 +51,7 @@ int		ft_nbytesnegativo(ssize_t *nbytes, char **x)
 	return (0);
 }
 
-int		ft_aux(ssize_t nbytes, char **x, char **line)
+int	ft_aux(ssize_t nbytes, char **x, char **line)
 {
 	char	*tmp;
 	char	*tmp2;
@@ -63,7 +63,8 @@ int		ft_aux(ssize_t nbytes, char **x, char **line)
 	}
 	if (ft_nbytesnegativo(&nbytes, &*x))
 		return (-1);
-	if ((tmp = ft_strchr(*x, '\n')))
+	tmp = ft_strchr(*x, '\n');
+	if (tmp)
 	{
 		*tmp = '\0';
 		*line = ft_strdup(*x);
@@ -77,17 +78,16 @@ int		ft_aux(ssize_t nbytes, char **x, char **line)
 	return (0);
 }
 
-int		get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	char		*buff;
 	static char	*x[4096];
 	ssize_t		nbytes;
 	char		*tmp;
 
-	if (fd < 0 || line == NULL || BUFFER_SIZE <= 0 ||
-		(!(buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1)))))
-		return (-1);
-	while ((nbytes = read(fd, buff, BUFFER_SIZE)) > 0)
+	buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	nbytes = read(fd, buff, BUFFER_SIZE);
+	while (nbytes)
 	{
 		buff[nbytes] = '\0';
 		if (!x[fd])
@@ -100,6 +100,7 @@ int		get_next_line(int fd, char **line)
 		}
 		if (ft_strchr(buff, '\n'))
 			break ;
+		nbytes = read(fd, buff, BUFFER_SIZE);
 	}
 	free(buff);
 	buff = NULL;

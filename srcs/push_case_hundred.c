@@ -6,13 +6,13 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 16:06:17 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/06/02 21:52:32 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/06/03 15:37:28 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-int	len_block (int len)
+int	len_block	(int len)
 {
 	if (len >= 100 && len < 500)
 		return (20);
@@ -25,11 +25,13 @@ int	len_block (int len)
 	return (0);
 }
 
-void	push_min(t_list **stack_a, t_list **stack_b, int pivote_a, int *sort_array_b, int ref)
+void	push_min(t_list **stack_a, t_list **stack_b, int *sort_array_b, int ref)
 {
 	int	len;
-	int block;
+	int	block;
+	int	pivote_a;
 
+	pivote_a = sort_array_b[ref];
 	block = 0;
 	push(stack_a, stack_b, 'a');
 	len = ft_lstsize(*stack_a) + ft_lstsize(*stack_b);
@@ -50,21 +52,22 @@ void	push_min(t_list **stack_a, t_list **stack_b, int pivote_a, int *sort_array_
 		rotate(stack_b, 'b');
 }
 
-void	rotate_max(t_list **stack_a, t_list **stack_b, int *sort_array_b, int ref)
+void	rotate_max(t_list **stack_a, t_list **stack_b,
+		int *sort_array_b, int ref)
 {
 	int	len;
-	int block;
+	int	block;
 
 	block = 0;
 	len = ft_lstsize(*stack_a) + ft_lstsize(*stack_b);
 	if (len >= 500)
 		block = 25;
 	else if (len >= 100 && len < 500)
-			block = 10;
+		block = 10;
 	else if (len == 4)
 		block = 2;
 	else if (len > 5)
-			block = 3;
+		block = 3;
 	if (ft_lstsize(*stack_b) >= 2 && (*stack_b)->content
 		< sort_array_b[ref - block])
 		rotate_rr(stack_a, stack_b);
@@ -86,7 +89,7 @@ void	push_hundred (t_list **stack_a, t_list **stack_b, int len, int *s_array)
 		while (ft_lstsize(*stack_b) < i)
 		{
 			if (pivote_a > (*stack_a)->content || i == len)
-				push_min(stack_a, stack_b, pivote_a, s_array, i);
+				push_min(stack_a, stack_b, s_array, i);
 			else
 				rotate_max(stack_a, stack_b, s_array, i);
 		}
